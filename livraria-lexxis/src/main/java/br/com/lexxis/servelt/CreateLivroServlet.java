@@ -1,10 +1,15 @@
 package br.com.lexxis.servelt;
 
+import br.com.lexxis.dao.LivroDao;
+import br.com.lexxis.model.Livro;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 @WebServlet("/create-livro")
 public class CreateLivroServlet extends HttpServlet {
@@ -12,10 +17,14 @@ public class CreateLivroServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String carName = request.getParameter("livro-name");
+        String livroNome = request.getParameter("livro-name");
 
-        System.out.println(carName);
+        Livro livro = new Livro(livroNome);
+
+        new LivroDao().createLivro(livro);
 
         request.getRequestDispatcher("index.html").forward(request, response);
     }
+
+
 }
