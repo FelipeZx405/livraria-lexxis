@@ -58,12 +58,12 @@ public class LivroDao {
 
                 String carName = resultSet.getString("nome");
 
-                Livro livro = new Livro();
-                String nome = resultSet.getString("nome");
-                String id = resultSet.getString("id");
-                livro.setNome(nome);
-                livro.setId(id);
-                livros.add(livro);
+//                Livro livro = new Livro();
+//                String nome = resultSet.getString("nome");
+//                String id = resultSet.getString("id");
+//                livro.setNome(nome);
+//                livro.setId(id);
+//                livros.add(livro);
 
             }
 
@@ -79,5 +79,31 @@ public class LivroDao {
 
             return Collections.emptyList();
         }
+    }
+
+    public void deleteLivrosById(String carId) {
+
+        String SQL = "DELETE LIVRO WHERE ID = ?";
+
+        try {
+
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+
+            System.out.println("sucesso ao conectar com o banco de dados");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, carId);
+            preparedStatement.execute();
+
+            System.out.println("sucesso ao deletar o livro com o id: " + carId);
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("falha ao conectar com o banco de dados!!!");
+
+        }
+
     }
 }
