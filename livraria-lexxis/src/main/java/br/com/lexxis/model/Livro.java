@@ -5,12 +5,8 @@ public class Livro {
     private String nome;
     private String id;
     private String autor;
-    private String descrição;
+    private String descricao;
     private double preco;
-
-    public Livro(String nome) {
-        this.nome = nome;
-    }
 
     public String getNome() {
         return nome;
@@ -36,12 +32,12 @@ public class Livro {
         this.autor = autor;
     }
 
-    public String getDescrição() {
-        return descrição;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescrição(String descrição) {
-        this.descrição = descrição;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public double getPreco() {
@@ -52,3 +48,4 @@ public class Livro {
         this.preco = preco;
     }
 }
+

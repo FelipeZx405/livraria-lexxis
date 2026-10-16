@@ -16,7 +16,7 @@ public class DeleteLivroServlet extends HttpServlet {
 
         String livroId = req.getParameter("id");
 
-        new LivroDao().deleteLivrosById(livroId);;
+        new LivroDao().deleteById(livroId);
 
         resp.sendRedirect("/find-all-livros");
 

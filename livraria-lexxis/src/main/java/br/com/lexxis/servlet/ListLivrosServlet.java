@@ -17,11 +17,13 @@ public class ListLivrosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Livro> livros = new LivroDao().findAllLivros();
+        LivroDao dao = new LivroDao();
 
-        req.setAttribute("livros", livros);
+        List<Livro> allLivros = dao.findAllLivros();
 
-        req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+        req.setAttribute("livros", allLivros);
+
+        req.getRequestDispatcher("/dashboard.jsp").forward(req, resp);
 
     }
 

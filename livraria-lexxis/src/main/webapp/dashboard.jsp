@@ -11,12 +11,19 @@
     <table>
         <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>Nome</th>
+            <th>Options</th>
         </tr>
-        <c:forEach var="livro" items="${cars}">
+        <c:forEach var="livro" items="${livros}">
             <tr>
-                <td></td>
-                <td>${livro.name}</td>
+                <td>${livro.id}</td>
+                <td>${livro.nome}</td>
+                <td>
+                     <form action="/delete-livro" method="post">
+                         <input type= "hidden" id="id" nome="id" value="${livro.id}">
+                         <button type="submmit">Delete</button>
+                         </form>
+                         </td>
             </tr>
         </c:forEach>
     </table>
