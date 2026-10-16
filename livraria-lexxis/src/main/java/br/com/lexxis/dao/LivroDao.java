@@ -14,7 +14,7 @@ public class LivroDao {
 
     public void createLivro(Livro livro){
 
-        String SQL = "INSERT INTO LIVRO (NOME) VALUES (?)";
+        String SQL = "INSERT INTO LIVRO (NAME) VALUES (?)";
 
         try {
 
@@ -58,7 +58,7 @@ public class LivroDao {
             while (resultSet.next()) {
 
                 Livro livro = new Livro();
-                String nome = resultSet.getString("nome");
+                String nome = resultSet.getString("NAME");
                 String id = resultSet.getString("id");
                 livro.setNome(nome);
                 livro.setId(id);
@@ -101,6 +101,35 @@ public class LivroDao {
         } catch (Exception e) {
 
             System.out.println("Falha ao conectar com o banco de dados!!!");
+
+        }
+
+    }
+
+    public void updateLivro(Livro livro) {
+
+        String SQL = "UPDATE LIVRO SET NAME = ? WHERE ID = ?";
+
+        try {
+
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+
+            System.out.println("success in database connection");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, livro.getNome());
+            preparedStatement.setString(2, livro.getId());
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar o livro");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("Falha ao conectar no Banco de Dados");
+            System.out.println("Error: " + e.getMessage());
 
         }
 

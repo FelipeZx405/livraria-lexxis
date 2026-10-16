@@ -17,13 +17,20 @@ public class CreateLivroServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+//        String id = request.getParameter("id");
         String nome = request.getParameter("nome");
+
 
         Livro livro = new Livro();
         livro.setNome(nome);
 
         LivroDao dao = new LivroDao();
         dao.createLivro(livro);
+//
+//        if (id.isBlank()){
+//
+//            LivroDao
+//        }
 
         response.sendRedirect("/find-all-livros");
     }
