@@ -18,7 +18,7 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 
 **Categorias:** Organização dos livros em diferentes categorias, facilitando a pesquisa e navegação pelo catálogo.
 
-![Cadastro de Clientes](img/Captura%20de%20tela%202026-09-15%20215753.png)
+![Cadastro de Clientes](img/Catalogo_de_Livros.png)
 
 **Pesquisa de Livros:** Permite pesquisar livros e utilizar filtros para facilitar a localização de produtos.
 
