@@ -10,15 +10,9 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 
 **Login:** Permite o acesso ao sistema por meio de diferentes tipos de usuários, como ADMIN e clientes.
 
-![Tela de login](img/prototipo_login.png)
-
 **Categorias:** Organização dos livros em diferentes categorias, facilitando a pesquisa e navegação pelo catálogo.
 
-![Cadastro de Clientes](img/Catalogo_de_Livros.png)
-
 **Carrinho de Compras:** Permite adicionar livros ao carrinho, alterar a quantidade de itens, remover produtos e visualizar o valor total da compra.
-
-![Carrinho de compras](img/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
 
 **Controle de Estoque:** Permite controlar a quantidade disponível de cada livro, auxiliando no gerenciamento dos produtos.
 
@@ -50,9 +44,12 @@ O banco de dados será desenvolvido utilizando a modelagem de dados para organiz
 As telas do sistema foram planejadas e desenvolvidas no Figma, incluindo:
 
 - Tela de Login;
+- ![Tela de login](img/prototipo_login.png)
 - Página Inicial;
 - Catálogo de Livros;
+- ![Catalogo de livros](img/Catalogo_de_Livros.png)
 - Carrinho de Compras.
+- ![Carrinho de compras](img/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
 
 ## Status do Projeto
 
