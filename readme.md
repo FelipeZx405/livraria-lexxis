@@ -52,7 +52,7 @@ As telas do sistema foram planejadas e desenvolvidas no Figma, incluindo:
 - Carrinho de Compras.
 - ![Carrinho de compras](img/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
 
-##Modelo de Entidade e Relacionamento
+## Modelo de Entidade e Relacionamento
 
 ![modelo de entidades e relacionamentos do projeto](img/Modelo_de_Entidades_e_Relacionamento.png)
 
