@@ -9,7 +9,8 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 ## Funcionalidades
 
 **Login:** Permite o acesso ao sistema por meio de diferentes tipos de usuários, como ADMIN e clientes.
-![Tela de login ](imagem/prototipo_login.png)
+
+![Tela de login](imagem/prototipo_login.png)
 
 **Cadastro de Clientes:** Permite o registro de informações dos clientes, como nome, CPF, data de nascimento, contato e endereço.
 
