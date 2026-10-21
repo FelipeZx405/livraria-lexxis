@@ -46,6 +46,7 @@ As telas do sistema foram planejadas e desenvolvidas no Figma, incluindo:
 - Tela de Login;
 - ![Tela de login](img/prototipo_login.png)
 - Página Inicial;
+- ![Home Page](img/Desenvolvimento_da_HomePage.png)
 - Catálogo de Livros;
 - ![Catalogo de livros](img/Catalogo_de_Livros.png)
 - Carrinho de Compras.
