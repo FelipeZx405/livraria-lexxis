@@ -10,17 +10,17 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 
 **Login:** Permite o acesso ao sistema por meio de diferentes tipos de usuários, como ADMIN e clientes.
 
-**Cadastro de Clientes:** Permite o registro de informações dos clientes, como nome, CPF, data de nascimento, contato e endereço.
-
-**Cadastro de Livros:** Permite o registro e gerenciamento de livros, contendo informações como título, preço e categoria.
-
 **Categorias:** Organização dos livros em diferentes categorias, facilitando a pesquisa e navegação pelo catálogo.
-
-**Pesquisa de Livros:** Permite pesquisar livros e utilizar filtros para facilitar a localização de produtos.
 
 **Carrinho de Compras:** Permite adicionar livros ao carrinho, alterar a quantidade de itens, remover produtos e visualizar o valor total da compra.
 
 **Controle de Estoque:** Permite controlar a quantidade disponível de cada livro, auxiliando no gerenciamento dos produtos.
+
+**Cadastro de Clientes:** Permite o registro de informações dos clientes, como nome, CPF, data de nascimento, contato e endereço.
+
+**Cadastro de Livros:** Permite o registro e gerenciamento de livros, contendo informações como título, preço e categoria.
+
+**Pesquisa de Livros:** Permite pesquisar livros e utilizar filtros para facilitar a localização de produtos.
 
 **Pagamentos:** Permite registrar o pagamento das compras realizadas pelos clientes.
 
@@ -44,9 +44,17 @@ O banco de dados será desenvolvido utilizando a modelagem de dados para organiz
 As telas do sistema foram planejadas e desenvolvidas no Figma, incluindo:
 
 - Tela de Login;
+- ![Tela de login](img/prototipo_login.png)
 - Página Inicial;
+- ![Home Page](img/Desenvolvimento_da_HomePage.png)
 - Catálogo de Livros;
+- ![Catalogo de livros](img/Catalogo_de_Livros.png)
 - Carrinho de Compras.
+- ![Carrinho de compras](img/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
+
+## Modelo de Entidade e Relacionamento
+
+![modelo de entidades e relacionamentos do projeto](img/Modelo_de_Entidades_e_Relacionamento.png)
 
 ## Status do Projeto
 
