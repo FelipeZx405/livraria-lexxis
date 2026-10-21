@@ -10,7 +10,7 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 
 **Login:** Permite o acesso ao sistema por meio de diferentes tipos de usuários, como ADMIN e clientes.
 
-![Tela de login]([imagem/prototipo_login.png](https://github.com/FelipeZx405/livraria-lexxis/blob/main/img/prototipo_login.png?raw=true))
+![Tela de login](img/prototipo_login.png)
 
 **Cadastro de Clientes:** Permite o registro de informações dos clientes, como nome, CPF, data de nascimento, contato e endereço.
 
