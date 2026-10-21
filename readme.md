@@ -18,13 +18,13 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 
 **Categorias:** Organização dos livros em diferentes categorias, facilitando a pesquisa e navegação pelo catálogo.
 
-![Cadastro de Clientes](imagem/Captura%20de%20tela%202026-09-15%20215753.png)
+![Cadastro de Clientes](img/Captura%20de%20tela%202026-09-15%20215753.png)
 
 **Pesquisa de Livros:** Permite pesquisar livros e utilizar filtros para facilitar a localização de produtos.
 
 **Carrinho de Compras:** Permite adicionar livros ao carrinho, alterar a quantidade de itens, remover produtos e visualizar o valor total da compra.
 
-![Carrinho de compras](imagem/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
+![Carrinho de compras](img/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
 
 **Controle de Estoque:** Permite controlar a quantidade disponível de cada livro, auxiliando no gerenciamento dos produtos.
 
