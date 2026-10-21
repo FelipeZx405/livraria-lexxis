@@ -20,7 +20,7 @@
                 <td>${livro.nome}</td>
                 <td>
                      <form action="/delete-livro" method="post">
-                         <input type= "hidden" id="id" nome="id" value="${livro.id}">
+                         <input type= "hidden" id="id" name="id" value="${livro.id}">
                          <button type="submmit">Delete</button>
                          </form>
                          </td>
