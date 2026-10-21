@@ -12,21 +12,21 @@ O projeto foi pensado para facilitar a pesquisa e compra de livros de diferentes
 
 ![Tela de login](img/prototipo_login.png)
 
-**Cadastro de Clientes:** Permite o registro de informações dos clientes, como nome, CPF, data de nascimento, contato e endereço.
-
-**Cadastro de Livros:** Permite o registro e gerenciamento de livros, contendo informações como título, preço e categoria.
-
 **Categorias:** Organização dos livros em diferentes categorias, facilitando a pesquisa e navegação pelo catálogo.
 
 ![Cadastro de Clientes](img/Catalogo_de_Livros.png)
-
-**Pesquisa de Livros:** Permite pesquisar livros e utilizar filtros para facilitar a localização de produtos.
 
 **Carrinho de Compras:** Permite adicionar livros ao carrinho, alterar a quantidade de itens, remover produtos e visualizar o valor total da compra.
 
 ![Carrinho de compras](img/Protótipo%20do%20carrinho%20de%20compras%20Lexxis.png)
 
 **Controle de Estoque:** Permite controlar a quantidade disponível de cada livro, auxiliando no gerenciamento dos produtos.
+
+**Cadastro de Clientes:** Permite o registro de informações dos clientes, como nome, CPF, data de nascimento, contato e endereço.
+
+**Cadastro de Livros:** Permite o registro e gerenciamento de livros, contendo informações como título, preço e categoria.
+
+**Pesquisa de Livros:** Permite pesquisar livros e utilizar filtros para facilitar a localização de produtos.
 
 **Pagamentos:** Permite registrar o pagamento das compras realizadas pelos clientes.
 
