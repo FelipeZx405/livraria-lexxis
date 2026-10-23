@@ -1,3 +1,4 @@
 .idea
 
-livraria-lexxis/target
+livraria-lexxis/target/*
+
