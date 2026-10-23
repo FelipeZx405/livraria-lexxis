@@ -27,4 +27,6 @@ public class ListLivrosServlet extends HttpServlet {
 
     }
 
+    //CREATE TABLE LIVRO(ID INT PRIMARY KEY AUTO_INCREMENT, NAME VARCHAR(255));
+
 }

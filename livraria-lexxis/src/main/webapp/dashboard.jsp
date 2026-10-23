@@ -11,7 +11,7 @@
     <table>
         <tr>
             <th>ID</th>
-            <th>Nome</th>
+            <th>Name</th>
             <th>Options</th>
         </tr>
         <c:forEach var="livro" items="${livros}">
@@ -22,6 +22,8 @@
                      <form action="/delete-livro" method="post">
                          <input type= "hidden" id="id" name="id" value="${livro.id}">
                          <button type="submmit">Delete</button>
+                         <span> | </span>
+                         <a href="index.jsp?id=${car.id}&name=${car.name}">Update</a>
                          </form>
                          </td>
             </tr>
