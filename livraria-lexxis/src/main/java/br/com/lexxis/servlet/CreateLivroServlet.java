@@ -25,13 +25,13 @@ public class CreateLivroServlet extends HttpServlet {
         livro.setNome(name);
 
         LivroDao dao = new LivroDao();
-        dao.createLivro(livro);
 
         if (id.isEmpty()){
 
             dao.createLivro(livro);
 
         }else {
+            livro.setId(id);
             dao.updateLivro(livro);
         }
 

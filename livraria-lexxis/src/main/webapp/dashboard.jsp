@@ -23,7 +23,7 @@
                          <input type= "hidden" id="id" name="id" value="${livro.id}">
                          <button type="submmit">Delete</button>
                          <span> | </span>
-                         <a href="index.jsp?id=${car.id}&name=${car.name}">Update</a>
+                         <a href="index.jsp?id=${livro.id}&name=${livro.nome}">Update</a>
                          </form>
                          </td>
             </tr>
