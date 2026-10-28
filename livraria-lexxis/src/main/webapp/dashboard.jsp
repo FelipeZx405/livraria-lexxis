@@ -9,21 +9,29 @@
   <div>
     <h1>Livros</h1>
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Options</th>
-        </tr>
+       <tr>
+           <th>ID</th>
+           <th>Name</th>
+           <th>Autor</th>
+           <th>Descrição</th>
+           <th>Preço</th>
+           <th>Estoque</th>
+           <th>Options</th>
+       </tr>
         <c:forEach var="livro" items="${livros}">
             <tr>
                 <td>${livro.id}</td>
                 <td>${livro.nome}</td>
+                <td>${livro.autor}</td>
+                <td>${livro.descricao}</td>
+                <td>${livro.preco}</td>
+                <td>${livro.estoque}</td>
                 <td>
                      <form action="/delete-livro" method="post">
                          <input type= "hidden" id="id" name="id" value="${livro.id}">
-                         <button type="submmit">Delete</button>
+                         <button type="submit">Delete</button>
                          <span> | </span>
-                         <a href="index.jsp?id=${livro.id}&name=${livro.nome}">Update</a>
+                         <a href="index.jsp?id=${livro.id}&name=${livro.nome}&autor=${livro.autor}&descricao=${livro.descricao}&preco=${livro.preco}&estoque=${livro.estoque}">Update</a>
                          </form>
                          </td>
             </tr>

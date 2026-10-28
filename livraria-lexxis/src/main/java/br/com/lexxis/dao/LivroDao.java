@@ -14,7 +14,7 @@ public class LivroDao {
 
     public void createLivro(Livro livro){
 
-        String SQL = "INSERT INTO LIVRO (NAME) VALUES (?)";
+        String SQL = "INSERT INTO LIVRO (NAME, AUTOR, DESCRICAO, PRECO, ESTOQUE) VALUES (?, ?, ?, ?, ?)";
 
         try {
 
@@ -25,6 +25,10 @@ public class LivroDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, livro.getNome());
+            preparedStatement.setString(2, livro.getAutor());
+            preparedStatement.setString(3, livro.getDescricao());
+            preparedStatement.setDouble(4, livro.getPreco());
+            preparedStatement.setInt(5, livro.getEstoque());
             preparedStatement.execute();
 
             System.out.println("Sucesso ao inserir o livro");
@@ -62,6 +66,10 @@ public class LivroDao {
                 String id = resultSet.getString("id");
                 livro.setNome(nome);
                 livro.setId(id);
+                livro.setAutor(resultSet.getString("AUTOR"));
+                livro.setDescricao(resultSet.getString("DESCRICAO"));
+                livro.setPreco(resultSet.getDouble("PRECO"));
+                livro.setEstoque(resultSet.getInt("ESTOQUE"));
                 livros.add(livro);
 
             }
@@ -108,7 +116,7 @@ public class LivroDao {
 
     public void updateLivro(Livro livro) {
 
-        String SQL = "UPDATE LIVRO SET NAME = ? WHERE ID = ?";
+        String SQL = "UPDATE LIVRO SET NAME = ?, AUTOR = ?, DESCRICAO = ?, PRECO = ?, ESTOQUE = ? WHERE ID = ?";
 
         try {
 
@@ -119,7 +127,11 @@ public class LivroDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, livro.getNome());
-            preparedStatement.setString(2, livro.getId());
+            preparedStatement.setString(2, livro.getAutor());
+            preparedStatement.setString(3, livro.getDescricao());
+            preparedStatement.setDouble(4, livro.getPreco());
+            preparedStatement.setInt(5, livro.getEstoque());
+            preparedStatement.setString(6, livro.getId());
             preparedStatement.execute();
 
             System.out.println("Sucesso ao atualizar o livro");

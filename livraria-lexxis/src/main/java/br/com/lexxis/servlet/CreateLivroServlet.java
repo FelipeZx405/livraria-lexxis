@@ -17,12 +17,28 @@ public class CreateLivroServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String id = request.getParameter("id");
         String name = request.getParameter("name");
+        String autor = request.getParameter("autor");
+        String descricao = request.getParameter("descricao");
+        String precoParam = request.getParameter("preco");
 
 
         Livro livro = new Livro();
         livro.setNome(name);
+        livro.setAutor(autor);
+        livro.setDescricao(descricao);
+
+        if (precoParam != null && !precoParam.isEmpty()) {
+            livro.setPreco(Double.parseDouble(precoParam));
+        }
+        String estoqueParam = request.getParameter("estoque");
+
+        if (estoqueParam != null && !estoqueParam.isEmpty()) {
+            livro.setEstoque(Integer.parseInt(estoqueParam));
+        }
 
         LivroDao dao = new LivroDao();
 

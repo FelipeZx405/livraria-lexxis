@@ -7,6 +7,7 @@ public class Livro {
     private String autor;
     private String descricao;
     private double preco;
+    private int estoque;
 
     public String getNome() {
         return nome;
@@ -46,6 +47,14 @@ public class Livro {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
     }
 }
 
