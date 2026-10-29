@@ -7,8 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Catálogo - Livraria Lexxis</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/menu.jspf" %>
+
 <h1>Catálogo de Livros</h1>
 
 <p>
@@ -17,7 +20,7 @@
     </a>
 </p>
 
-<table border="1">
+<table>
     <tr>
         <th>Livro</th>
         <th>Autor</th>

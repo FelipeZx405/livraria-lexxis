@@ -7,12 +7,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Carrinho - Livraria Lexxis</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/menu.jspf" %>
+
 <h1>Carrinho de Compras</h1>
 
 <c:if test="${not empty mensagem}">
-    <p><strong><c:out value="${mensagem}"/></strong></p>
+    <p class="mensagem"><c:out value="${mensagem}"/></p>
 </c:if>
 
 <c:choose>
@@ -22,7 +25,7 @@
     </c:when>
 
     <c:otherwise>
-        <table border="1">
+        <table>
             <tr>
                 <th>Livro</th>
                 <th>Autor</th>
@@ -51,7 +54,7 @@
                         <form action="/carrinho" method="post">
                             <input type="hidden" name="acao" value="remover">
                             <input type="hidden" name="id" value="${item.livro.id}">
-                            <button type="submit">Remover</button>
+                            <button type="submit" class="perigo">Remover</button>
                         </form>
                     </td>
                 </tr>
@@ -62,7 +65,7 @@
 
         <form action="/carrinho" method="post">
             <input type="hidden" name="acao" value="limpar">
-            <button type="submit">Esvaziar carrinho</button>
+            <button type="submit" class="perigo">Esvaziar carrinho</button>
         </form>
     </c:otherwise>
 

@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/menu.jspf" %>
   <div>
     <h1>Livros</h1>
     <table>
