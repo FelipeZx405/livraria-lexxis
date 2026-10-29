@@ -13,8 +13,8 @@
            <th>ID</th>
            <th>Name</th>
            <th>Autor</th>
-           <th>Descrição</th>
-           <th>Preço</th>
+           <th>Descricao</th>
+           <th>Preco</th>
            <th>Estoque</th>
            <th>Options</th>
        </tr>
