@@ -8,7 +8,8 @@
 <body>
   <div>
     <h1>Livros</h1>
-    <table>
+    <p>Olá, ${sessionScope.usuarioLogado.nome} | <a href="/logout">Sair</a></p>
+        <table>
        <tr>
            <th>ID</th>
            <th>Name</th>
