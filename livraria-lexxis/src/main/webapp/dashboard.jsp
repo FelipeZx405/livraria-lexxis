@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<%@ include file="/WEB-INF/menu.jspf" %>
   <div>
     <h1>Livros</h1>
     <p>Olá, ${sessionScope.usuarioLogado.nome} | <a href="/logout">Sair</a></p>
@@ -14,8 +16,8 @@
            <th>ID</th>
            <th>Name</th>
            <th>Autor</th>
-           <th>Descrição</th>
-           <th>Preço</th>
+           <th>Descricao</th>
+           <th>Preco</th>
            <th>Estoque</th>
            <th>Options</th>
        </tr>
