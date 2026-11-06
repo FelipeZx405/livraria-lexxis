@@ -31,8 +31,7 @@ public class AuthFilter implements Filter {
         HttpSession session = req.getSession(false);
         boolean logado = session != null && session.getAttribute("usuarioLogado") != null;
 
-        boolean paginaPublica = path.equals("/login") || path.equals("/registro")
-                || path.startsWith("/css/") || path.startsWith("/img/");;
+        boolean paginaPublica = path.equals("/login") || path.equals("/registro");
 
         if (logado || paginaPublica) {
             chain.doFilter(request, response);
