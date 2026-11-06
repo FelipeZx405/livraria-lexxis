@@ -1,6 +1,7 @@
 package br.com.lexxis.dao;
 
 import br.com.lexxis.model.Livro;
+import br.com.lexxis.servlet.config.ConnectionPoolConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,9 +19,7 @@ public class LivroDao {
 
         try {
 
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
-
-            System.out.println("Sucesso na conexão com o banco de dados");
+            Connection connection = ConnectionPoolConfig.getConnection();
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
 
