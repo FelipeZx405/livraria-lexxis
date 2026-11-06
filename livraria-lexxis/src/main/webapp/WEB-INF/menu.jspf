@@ -1,6 +1,61 @@
-<nav>
-    <a href="/catalogo">Cat&aacute;logo</a>
-    <a href="/carrinho">Carrinho</a>
-    <a href="/find-all-livros">Livros (admin)</a>
-    <a href="/index.jsp">Cadastrar livro</a>
-</nav>
+
+<header class="cabecalho">
+
+    <nav class="navbar">
+
+        <!-- LOGO -->
+       <a href="/catalogo" class="logo">
+           <img src="/img/logo.png" alt="Lexxis Livraria" height="46">
+       </a>
+
+        <!-- LINKS -->
+        <div class="nav-links">
+            <a href="/catalogo">INICIO</a>
+            <a href="/catalogo">LIVROS</a>
+            <a href="/sobre">SOBRE</a>
+            <a href="/contato">CONTATO</a>
+
+        </div>
+
+        <!-- ÍCONES -->
+        <div class="nav-icons">
+
+            <a href="/catalogo" title="Pesquisar" class="icone">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="10.5" cy="10.5" r="6.5"/>
+                    <path d="m16 16 5 5"/>
+                </svg>
+            </a>
+
+            <a href="/carrinho" title="Carrinho" class="icone">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 3h2l2.5 12h11L21 7H6"/>
+                    <circle cx="9" cy="19" r="1.5"/>
+                    <circle cx="17" cy="19" r="1.5"/>
+                </svg>
+            </a>
+
+            <a href="/login" title="Minha conta" class="icone">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/>
+                </svg>
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- BARRA DE PESQUISA -->
+    <div class="barra-pesquisa">
+        <form action="/catalogo" method="get">
+
+            <input
+                type="text"
+                name="busca"
+                placeholder="Pesquisar livros, autores ou categorias..."
+            >
+        </form>
+    </div>
+
+</header>
