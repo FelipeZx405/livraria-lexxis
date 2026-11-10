@@ -1,26 +1,29 @@
+<%-- Cabeçalho padrão do site. Use: <%@ include file="/WEB-INF/menu.jspf" %> logo depois do <body> --%>
+<c:set var="logado" value="${not empty sessionScope.usuarioLogado}"/>
+<c:set var="qtdCarrinho" value="${empty sessionScope.carrinho ? 0 : sessionScope.carrinho.quantidadeTotal}"/>
 
 <header class="cabecalho">
 
     <nav class="navbar">
 
         <!-- LOGO -->
-       <a href="/catalogo" class="logo">
-           <img src="/img/logo.png" alt="Lexxis Livraria" height="48">
-       </a>
+        <a href="/catalogo" class="logo">
+            <img src="/img/logo.png" alt="Lexxis Livraria" height="48">
+        </a>
 
         <!-- LINKS -->
         <div class="nav-links">
-            <a href="/catalogo">INICIO</a>
+            <a href="/catalogo">INÍCIO</a>
             <a href="/catalogo">LIVROS</a>
-            <a href="/sobre">SOBRE</a>
-            <a href="/contato">CONTATO</a>
-
+            <a href="#sobre">SOBRE</a>
+            <a href="#contato">CONTATO</a>
         </div>
 
         <!-- ÍCONES -->
         <div class="nav-icons">
 
-            <a href="/catalogo" title="Pesquisar" class="icone">
+            <a href="#busca" title="Pesquisar" class="icone"
+               onclick="document.getElementById('busca').focus(); return false;">
                 <svg viewBox="0 0 24 24">
                     <circle cx="10.5" cy="10.5" r="6.5"/>
                     <path d="m16 16 5 5"/>
@@ -33,14 +36,30 @@
                     <circle cx="9" cy="19" r="1.5"/>
                     <circle cx="17" cy="19" r="1.5"/>
                 </svg>
+                <c:if test="${qtdCarrinho > 0}">
+                    <span class="badge">${qtdCarrinho}</span>
+                </c:if>
             </a>
 
-            <a href="/login" title="Minha conta" class="icone">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="7" r="4"/>
-                    <path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/>
-                </svg>
-            </a>
+            <c:choose>
+                <c:when test="${logado}">
+                    <a href="/conta" title="Minha conta" class="icone">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="7" r="4"/>
+                            <path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/>
+                        </svg>
+                    </a>
+                    <a href="/logout" class="link-sair">SAIR</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/login" title="Entrar" class="icone">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="7" r="4"/>
+                            <path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/>
+                        </svg>
+                    </a>
+                </c:otherwise>
+            </c:choose>
 
         </div>
 
@@ -49,12 +68,13 @@
     <!-- BARRA DE PESQUISA -->
     <div class="barra-pesquisa">
         <form action="/catalogo" method="get">
-
-            <input
-                type="text"
-                name="busca"
-                placeholder="Pesquisar livros, autores ou categorias..."
-            >
+            <svg class="pesquisa-icone" viewBox="0 0 24 24">
+                <circle cx="10.5" cy="10.5" r="6.5"/>
+                <path d="m16 16 5 5"/>
+            </svg>
+            <input type="text" id="busca" name="busca" autocomplete="off"
+                   placeholder="Pesquisar livros ou autores..."
+                   value="<c:out value='${param.busca}'/>">
         </form>
     </div>
 

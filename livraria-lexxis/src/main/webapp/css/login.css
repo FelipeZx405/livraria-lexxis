@@ -217,4 +217,10 @@ body {
     .lado-marca .livros {
         width: 150px;
     }
+
+    .msg.aviso {
+        background: #fff3cd;
+        color: #664d03;
+    }
+
 }

@@ -2,14 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="pt_BR"/>
-<c:set var="logado" value="${not empty sessionScope.usuarioLogado}"/>
-<c:set var="qtdCarrinho" value="${empty sessionScope.carrinho ? 0 : sessionScope.carrinho.quantidadeTotal}"/>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Catálogo - Livraria Lexxis</title>
+
+    <link rel="stylesheet" href="/css/style.css">
 
     <style>
         :root {
@@ -32,10 +32,6 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #fff;
@@ -48,140 +44,10 @@
             color: inherit;
         }
 
-        /* ---------- Cabecalho ---------- */
-        .topo {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: 12px;
-            background: var(--cinza-fundo);
-            padding: 10px 24px;
-        }
-
-        .logo {
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            line-height: 1;
-            justify-self: start;
-        }
-
-        .logo-nome {
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 26px;
-            font-weight: bold;
-        }
-
-        .logo-sub {
-            font-size: 8px;
-            letter-spacing: 3px;
-            margin-top: 3px;
-        }
-
-        .menu {
-            display: flex;
-            gap: 26px;
-        }
-
-        .menu a {
-            font-family: var(--mono);
-            font-weight: bold;
-            font-size: 13px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding: 4px 0;
-            border-bottom: 2px solid transparent;
-        }
-
-        .menu a:hover,
-        .menu a.ativo {
-            border-bottom-color: var(--marrom);
-        }
-
-        .icones {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            justify-self: end;
-        }
-
-        .icones a {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .icones svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--texto);
-        }
-
-        .icones a.sair {
-            font-size: 12px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .icones a.sair:hover {
-            text-decoration: underline;
-        }
-
-        .badge {
-            position: absolute;
-            top: -7px;
-            right: -9px;
-            background: var(--marrom);
-            color: #fff;
-            font-size: 10px;
-            font-weight: bold;
-            min-width: 16px;
-            height: 16px;
-            border-radius: 8px;
-            padding: 0 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ---------- Barra de busca ---------- */
-        .barra-busca {
-            max-width: 1200px;
-            margin: 14px auto 0;
-            padding: 0 24px;
-        }
-
-        .busca {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--cinza-fundo);
-            border-radius: 6px;
-            padding: 0 14px;
-        }
-
-        .busca svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--texto);
-            flex-shrink: 0;
-        }
-
-        .busca input {
-            flex: 1;
-            border: 0;
-            outline: 0;
-            background: transparent;
-            padding: 12px 4px;
-            font-family: var(--mono);
-            font-size: 14px;
-        }
-
         /* ---------- Layout da pagina ---------- */
         .pagina {
             max-width: 1200px;
-            margin: 16px auto 0;
+            margin: 0 auto;
             padding: 0 24px 24px;
             display: grid;
             grid-template-columns: 240px 1fr;
@@ -473,30 +339,6 @@
             color: var(--texto-suave);
         }
 
-        /* ---------- Rodape (Sobre e Contato) ---------- */
-        .rodape {
-            background: var(--cinza-fundo);
-            padding: 28px 24px;
-        }
-
-        .rodape-conteudo {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .rodape h3 {
-            font-family: var(--mono);
-            margin-bottom: 6px;
-        }
-
-        .rodape p {
-            font-size: 13px;
-            color: #444;
-        }
-
         /* ---------- Celular ---------- */
         @media (max-width: 820px) {
             .pagina {
@@ -506,76 +348,12 @@
             .filtros {
                 position: static;
             }
-
-            .rodape-conteudo {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .topo {
-                grid-template-columns: 1fr auto;
-            }
-
-            .menu {
-                grid-column: 1 / -1;
-                order: 3;
-                justify-content: center;
-            }
         }
     </style>
 </head>
 <body>
 
-<!-- ================= CABECALHO ================= -->
-<header class="topo">
-    <a class="logo" href="/catalogo">
-        <span class="logo-nome">Lexxis</span>
-        <span class="logo-sub">LIVRARIA</span>
-    </a>
-
-    <nav class="menu">
-        <a href="/catalogo">Início</a>
-        <a href="/catalogo" class="ativo">Livros</a>
-        <a href="#sobre">Sobre</a>
-        <a href="#contato">Contato</a>
-    </nav>
-
-    <div class="icones">
-        <a href="#busca" onclick="document.getElementById('busca').focus()" aria-label="Pesquisar">
-            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        </a>
-
-        <a href="/carrinho" aria-label="Carrinho">
-            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            <c:if test="${qtdCarrinho > 0}">
-                <span class="badge">${qtdCarrinho}</span>
-            </c:if>
-        </a>
-
-        <c:choose>
-            <c:when test="${logado}">
-                <a href="/find-all-livros" aria-label="Painel" title="<c:out value='${sessionScope.usuarioLogado.nome}'/>">
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                </a>
-                <a class="sair" href="/logout">Sair</a>
-            </c:when>
-            <c:otherwise>
-                <a href="/login" aria-label="Entrar" title="Entrar">
-                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                </a>
-            </c:otherwise>
-        </c:choose>
-    </div>
-</header>
-
-<!-- ================= BUSCA ================= -->
-<div class="barra-busca">
-    <label class="busca" for="busca">
-        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input type="search" id="busca" placeholder="Pesquisar livros ou autores..." autocomplete="off">
-    </label>
-</div>
+<%@ include file="/WEB-INF/menu.jspf" %>
 
 <div class="pagina">
 
@@ -701,21 +479,7 @@
     </main>
 </div>
 
-<!-- ================= SOBRE E CONTATO (edite os textos como quiser) ================= -->
-<footer class="rodape">
-    <div class="rodape-conteudo">
-        <section id="sobre">
-            <h3>SOBRE</h3>
-            <p>A Livraria Lexxis é uma livraria digital onde você pesquisa, escolhe e compra livros de diferentes
-                categorias e gêneros, em uma interface simples e intuitiva.</p>
-        </section>
-
-        <section id="contato">
-            <h3>CONTATO</h3>
-            <p>Os canais de atendimento da Lexxis estarão disponíveis em breve.</p>
-        </section>
-    </div>
-</footer>
+<%@ include file="/WEB-INF/rodape.jspf" %>
 
 <script>
     (function () {

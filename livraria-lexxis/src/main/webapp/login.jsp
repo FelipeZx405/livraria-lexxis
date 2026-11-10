@@ -25,6 +25,10 @@
 
         <h1>Entrar na Lexxis</h1>
 
+        <c:if test="${param.aviso == 'carrinho'}">
+            <div class="msg aviso">Entre na sua conta para usar o carrinho.</div>
+        </c:if>
+
         <c:if test="${param.registrado == '1'}">
             <div class="msg ok">Conta criada com sucesso! Faça login.</div>
         </c:if>

@@ -6,6 +6,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String perfil;
 
     public String getId() {
         return id;
@@ -37,6 +38,20 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    // "ADM" ou "CLIENTE"
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+
+    // o JSP usa como ${sessionScope.usuarioLogado.admin}
+    public boolean isAdmin() {
+        return "ADM".equals(perfil);
     }
 
 }

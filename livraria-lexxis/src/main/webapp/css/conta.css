@@ -1,0 +1,200 @@
+:root {
+    --marrom: #5a2d0c;
+    --marrom-escuro: #3f1e08;
+    --cinza-fundo: #d9d9d9;
+    --cinza-card: #e6e6e6;
+    --cinza-borda: #cfcfcf;
+    --texto: #1f1f1f;
+    --texto-suave: #666;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: var(--texto);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+a {
+    color: inherit;
+}
+
+/* ---------- Conteúdo ---------- */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+.subtitulo {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--texto-suave);
+    margin: 4px 0 20px;
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--marrom);
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.perfil .nome {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.perfil .email {
+    font-size: 12px;
+    color: var(--texto-suave);
+}
+
+/* ---------- Cartões ---------- */
+.grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.card {
+    background: var(--cinza-card);
+    border: 1px solid var(--cinza-borda);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.card h2 {
+    font-size: 16px;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #999;
+}
+
+label {
+    display: block;
+    margin: 14px 0 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    background: #f4f4f4;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 2px solid var(--marrom);
+}
+
+/* ---------- Botões ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card .btn {
+    width: 100%;
+    margin-top: 18px;
+}
+
+.btn-marrom {
+    background: var(--marrom);
+    color: #fff;
+}
+
+.btn-marrom:hover {
+    background: var(--marrom-escuro);
+}
+
+.btn-contorno {
+    background: transparent;
+    border-color: #666;
+    color: var(--texto);
+}
+
+.btn-contorno:hover {
+    background: #d6d6d6;
+}
+
+.btn-sair {
+    background: #fff;
+    border-color: #b42318;
+    color: #b42318;
+}
+
+.btn-sair:hover {
+    background: #b42318;
+    color: #fff;
+}
+
+.acoes-conta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* ---------- Mensagens ---------- */
+.msg {
+    padding: 10px 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.msg.ok {
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.msg.erro {
+    background: #fdecea;
+    color: #b71c1c;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 760px) {
+    .grade {
+        grid-template-columns: 1fr;
+    }
+}

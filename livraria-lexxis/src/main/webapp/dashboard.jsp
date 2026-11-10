@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,19 +9,23 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/menu.jspf" %>
-  <div>
+
+<div class="conteudo-pagina">
     <h1>Livros</h1>
     <p>Olá, ${sessionScope.usuarioLogado.nome} | <a href="/logout">Sair</a></p>
-        <table>
-       <tr>
-           <th>ID</th>
-           <th>Name</th>
-           <th>Autor</th>
-           <th>Descricao</th>
-           <th>Preco</th>
-           <th>Estoque</th>
-           <th>Options</th>
-       </tr>
+
+    <p><a href="/index.jsp">+ Novo livro</a> | <a href="/conta">Voltar para Minha conta</a></p>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Autor</th>
+            <th>Descricao</th>
+            <th>Preco</th>
+            <th>Estoque</th>
+            <th>Options</th>
+        </tr>
         <c:forEach var="livro" items="${livros}">
             <tr>
                 <td>${livro.id}</td>
@@ -30,16 +35,18 @@
                 <td>${livro.preco}</td>
                 <td>${livro.estoque}</td>
                 <td>
-                     <form action="/delete-livro" method="post">
-                         <input type= "hidden" id="id" name="id" value="${livro.id}">
-                         <button type="submit">Delete</button>
-                         <span> | </span>
-                         <a href="index.jsp?id=${livro.id}&name=${livro.nome}&autor=${livro.autor}&descricao=${livro.descricao}&preco=${livro.preco}&estoque=${livro.estoque}">Update</a>
-                         </form>
-                         </td>
+                    <form action="/delete-livro" method="post">
+                        <input type="hidden" name="id" value="${livro.id}">
+                        <button type="submit">Delete</button>
+                        <span> | </span>
+                        <a href="/index.jsp?id=${livro.id}&name=${livro.nome}&autor=${livro.autor}&descricao=${livro.descricao}&preco=${livro.preco}&estoque=${livro.estoque}">Update</a>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
     </table>
-  </div>
+</div>
+
+<%@ include file="/WEB-INF/rodape.jspf" %>
 </body>
 </html>

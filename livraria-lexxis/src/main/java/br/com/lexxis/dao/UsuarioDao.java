@@ -14,6 +14,7 @@ import java.util.List;
 
 public class UsuarioDao {
 
+    // quem se cadastra pelo site entra como CLIENTE (o banco usa o valor padrão da coluna PERFIL)
     public boolean createUsuario(Usuario usuario){
 
         String SQL = "INSERT INTO USUARIO (NAME, EMAIL, SENHA) VALUES (?, ?, ?)";
@@ -68,6 +69,7 @@ public class UsuarioDao {
                 usuario.setNome(resultSet.getString("NAME"));
                 usuario.setEmail(resultSet.getString("EMAIL"));
                 usuario.setSenha(resultSet.getString("SENHA"));
+                usuario.setPerfil(resultSet.getString("PERFIL"));
                 usuarios.add(usuario);
 
             }
@@ -143,7 +145,7 @@ public class UsuarioDao {
 
     }
 
-    // devolve o usuário (sem a senha) se email e senha conferem; senão devolve null
+    // devolve o usuário (sem a senha, mas COM o perfil) se email e senha conferem; senão devolve null
     public Usuario autenticar(String email, String senha) {
 
         String SQL = "SELECT * FROM USUARIO WHERE EMAIL = ?";
@@ -169,6 +171,7 @@ public class UsuarioDao {
                     usuario.setId(resultSet.getString("ID"));
                     usuario.setNome(resultSet.getString("NAME"));
                     usuario.setEmail(resultSet.getString("EMAIL"));
+                    usuario.setPerfil(resultSet.getString("PERFIL"));
 
                 }
             }
@@ -182,6 +185,55 @@ public class UsuarioDao {
             System.out.println("Erro ao autenticar o usuário: " + e.getMessage());
 
             return null;
+        }
+    }
+
+    // atualiza nome e e-mail do usuário. Devolve false se der erro (por exemplo, e-mail já usado por outra conta)
+    public boolean atualizarDados(String id, String nome, String email) {
+
+        String SQL = "UPDATE USUARIO SET NAME = ?, EMAIL = ? WHERE ID = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, nome);
+            preparedStatement.setString(2, email.trim().toLowerCase());
+            preparedStatement.setInt(3, Integer.parseInt(id));
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar os dados do usuário");
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Falha ao atualizar os dados do usuário: " + e.getMessage());
+
+            return false;
+        }
+    }
+
+    // troca só a senha (já salva com hash)
+    public boolean atualizarSenha(String id, String novaSenha) {
+
+        String SQL = "UPDATE USUARIO SET SENHA = ? WHERE ID = ?";
+
+        try (Connection connection = ConnectionPoolConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, SenhaUtil.gerarHash(novaSenha));
+            preparedStatement.setInt(2, Integer.parseInt(id));
+            preparedStatement.execute();
+
+            System.out.println("Sucesso ao atualizar a senha do usuário");
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Falha ao atualizar a senha do usuário: " + e.getMessage());
+
+            return false;
         }
     }
 }

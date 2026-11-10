@@ -1,11 +1,24 @@
+/* ===== BASE ===== */
+body {
+    margin: 0;
+}
 
-/* CABEÇALHO */
+html {
+    scroll-behavior: smooth;
+}
+
+/* usado no miolo das páginas simples (dashboard e formulário de livro) */
+.conteudo-pagina {
+    padding: 0 24px 24px;
+}
+
+/* ===== CABEÇALHO ===== */
 .cabecalho {
     width: 100%;
     margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* NAVBAR */
 .navbar {
     height: 58px;
     background: #dedede;
@@ -17,12 +30,15 @@
 
 /* LOGO */
 .logo {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    color: #222;
-    font-family: Georgia, serif;
-    font-size: 23px;
-    font-weight: bold;
-    font-style: italic;
+}
+
+.logo img {
+    height: 48px;
+    width: auto;
+    display: block;
 }
 
 /* LINKS CENTRAIS */
@@ -52,6 +68,7 @@
 }
 
 .icone {
+    position: relative;
     display: flex;
     align-items: center;
     color: #111;
@@ -71,6 +88,36 @@
     color: #8b4513;
 }
 
+.link-sair {
+    color: #111;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.link-sair:hover {
+    color: #8b4513;
+}
+
+/* número de itens do carrinho */
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: #5a2d0c;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* BARRA DE PESQUISA */
 .barra-pesquisa {
     max-width: 90%;
@@ -80,27 +127,71 @@
 .barra-pesquisa form {
     display: flex;
     align-items: center;
+    gap: 10px;
     background: #dedede;
     border-radius: 7px;
     padding: 0 12px;
     height: 38px;
+    margin: 0;
 }
 
 .pesquisa-icone {
-    font-size: 23px;
-    margin-right: 10px;
-    color: #222;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: #222;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
-.barra-pesquisa input {
+/* seletor mais "forte" de propósito: impede que o CSS de outras páginas mexa neste campo */
+.barra-pesquisa form input {
     width: 100%;
+    padding: 0;
     border: none;
     outline: none;
     background: transparent;
+    font-family: inherit;
     font-size: 14px;
 }
 
-/* RESPONSIVIDADE */
+.barra-pesquisa form input:focus {
+    outline: none;
+}
+
+/* ===== RODAPÉ (Sobre e Contato) ===== */
+.rodape {
+    margin-top: 32px;
+    padding: 28px 24px;
+    background: #dedede;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.rodape-conteudo {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.rodape h3 {
+    margin: 0 0 6px;
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: 1px;
+}
+
+.rodape p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #444;
+}
+
+/* ===== CELULAR ===== */
 @media (max-width: 700px) {
     .navbar {
         padding: 0 12px;
@@ -118,7 +209,11 @@
         gap: 10px;
     }
 
-    .logo {
-        font-size: 18px;
+    .logo img {
+        height: 36px;
+    }
+
+    .rodape-conteudo {
+        grid-template-columns: 1fr;
     }
 }

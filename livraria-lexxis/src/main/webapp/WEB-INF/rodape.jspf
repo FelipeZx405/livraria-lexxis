@@ -1,0 +1,17 @@
+<%-- Rodapé padrão do site: inclua este arquivo logo antes do fechamento do body --%>
+<footer class="rodape">
+    <div class="rodape-conteudo">
+
+        <section id="sobre">
+            <h3>SOBRE</h3>
+            <p>A Livraria Lexxis e uma livraria digital onde voce pesquisa, escolhe e compra livros de diferentes
+                categorias e generos, em uma interface simples e intuitiva.</p>
+        </section>
+
+        <section id="contato">
+            <h3>CONTATO</h3>
+            <p>Criadores Matheus Alves Pedroso - tell: (11) 9999-9999, hetero / Felipe Pereira dos Santos - tell: (11) 94783-5110, Gay nao assumido (Pfv ajudem ele criar coragem para se aceitar). </p>
+        </section>
+
+    </div>
+</footer>
