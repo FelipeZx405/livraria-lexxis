@@ -1,0 +1,53 @@
+<%-- Barra lateral de filtros das páginas do administrador: inclua dentro de div class="admin-layout" --%>
+<aside class="filtros">
+    <form id="form-filtros" action="/find-all-livros" method="get">
+
+        <div class="filtros-topo">
+            <h2>FILTROS</h2>
+            <a href="/find-all-livros" class="btn-limpar">Limpar filtros</a>
+        </div>
+
+        <div class="grupo">
+            <h3>Categorias <span class="em-breve">em breve</span></h3>
+            <label class="opcao desativada"><input type="checkbox" disabled> Romance</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Suspense</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Ficção Científica</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Comédia</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Educação</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Outros</label>
+        </div>
+
+        <div class="grupo">
+            <h3>Autor</h3>
+            <label class="campo-icone">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="10.5" cy="10.5" r="6.5"/>
+                    <path d="m16 16 5 5"/>
+                </svg>
+                <input type="text" id="f-autor" name="autor" placeholder="Pesquisar autor..." autocomplete="off"
+                       value="<c:out value='${param.autor}'/>">
+            </label>
+        </div>
+
+        <div class="grupo">
+            <h3>Faixa de Preço</h3>
+            <div class="faixa">
+                <input type="number" id="f-min" name="min" min="0" step="0.01" placeholder="R$ 0"
+                       value="<c:out value='${param.min}'/>">
+                <span>até</span>
+                <input type="number" id="f-max" name="max" min="0" step="0.01" placeholder="R$ 200"
+                       value="<c:out value='${param.max}'/>">
+            </div>
+            <button type="submit" class="btn btn-marrom">Aplicar Filtros</button>
+        </div>
+
+        <div class="grupo">
+            <h3>Idioma <span class="em-breve">em breve</span></h3>
+            <label class="opcao desativada"><input type="checkbox" disabled> Português</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Inglês</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Espanhol</label>
+            <label class="opcao desativada"><input type="checkbox" disabled> Outros</label>
+        </div>
+
+    </form>
+</aside>

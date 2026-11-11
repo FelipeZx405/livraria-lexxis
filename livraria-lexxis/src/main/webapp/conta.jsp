@@ -89,10 +89,10 @@
         <!-- ========== Ações ========== -->
         <div class="acoes-conta">
             <a class="btn btn-contorno" href="/catalogo">Voltar ao catálogo</a>
-
-            <c:if test="${sessionScope.usuarioLogado.admin}">
-                <a class="btn btn-contorno" href="/find-all-livros">Gerenciar livros</a>
-            </c:if>
+        <c:if test="${sessionScope.usuarioLogado.admin}">
+            <a class="btn btn-contorno" href="/form-livro">Adicionar livro</a>
+            <a class="btn btn-contorno" href="/find-all-livros">Editar e excluir livros</a>
+        </c:if>
 
             <a class="btn btn-sair" href="/logout">Sair da conta</a>
         </div>

@@ -20,6 +20,7 @@ public class AuthFilter implements Filter {
     // páginas que SÓ o administrador pode abrir
     private static final String[] ROTAS_ADMIN = {
             "/index.jsp",
+            "/form-livro",
             "/dashboard.jsp",
             "/find-all-livros",
             "/create-livro",

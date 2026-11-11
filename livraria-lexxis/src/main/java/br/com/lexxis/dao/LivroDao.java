@@ -145,4 +145,38 @@ public class LivroDao {
         }
 
     }
+    // busca um livro pelo id (usado para abrir o formulário de edição). Devolve null se não achar
+    public Livro findById(String id) {
+
+        String SQL = "SELECT * FROM LIVRO WHERE ID = ?";
+
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setInt(1, Integer.parseInt(id));
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                if (resultSet.next()) {
+
+                    Livro livro = new Livro();
+                    livro.setId(resultSet.getString("ID"));
+                    livro.setNome(resultSet.getString("NAME"));
+                    livro.setAutor(resultSet.getString("AUTOR"));
+                    livro.setDescricao(resultSet.getString("DESCRICAO"));
+                    livro.setPreco(resultSet.getDouble("PRECO"));
+                    livro.setEstoque(resultSet.getInt("ESTOQUE"));
+
+                    return livro;
+                }
+            }
+
+        } catch (Exception e) {
+
+            System.out.println("Erro ao buscar o livro: " + e.getMessage());
+
+        }
+
+        return null;
+    }
 }
