@@ -8,6 +8,7 @@ public class Livro {
     private String descricao;
     private double preco;
     private int estoque;
+    private String categoria;
 
     public String getNome() {
         return nome;
@@ -56,5 +57,12 @@ public class Livro {
     public void setEstoque(int estoque) {
         this.estoque = estoque;
     }
-}
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+}

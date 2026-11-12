@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%-- Cabeçalho padrão do site. Use: <%@ include file="/WEB-INF/menu.jspf" %> logo depois do <body> --%>
 <c:set var="logado" value="${not empty sessionScope.usuarioLogado}"/>
 <c:set var="qtdCarrinho" value="${empty sessionScope.carrinho ? 0 : sessionScope.carrinho.quantidadeTotal}"/>

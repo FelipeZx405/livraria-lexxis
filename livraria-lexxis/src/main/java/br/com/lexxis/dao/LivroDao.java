@@ -15,7 +15,7 @@ public class LivroDao {
 
     public void createLivro(Livro livro){
 
-        String SQL = "INSERT INTO LIVRO (NAME, AUTOR, DESCRICAO, PRECO, ESTOQUE) VALUES (?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO LIVRO (NAME, AUTOR, DESCRICAO, PRECO, ESTOQUE, CATEGORIA) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
 
@@ -28,6 +28,7 @@ public class LivroDao {
             preparedStatement.setString(3, livro.getDescricao());
             preparedStatement.setDouble(4, livro.getPreco());
             preparedStatement.setInt(5, livro.getEstoque());
+            preparedStatement.setString(6, livro.getCategoria());
             preparedStatement.execute();
 
             System.out.println("Sucesso ao inserir o livro");
@@ -36,7 +37,7 @@ public class LivroDao {
 
         } catch (Exception e) {
 
-            System.out.println("Falha ao inserir o livro no banco de dados");
+            System.out.println("Falha ao inserir o livro no banco de dados: " + e.getMessage());
 
         }
 
@@ -69,6 +70,7 @@ public class LivroDao {
                 livro.setDescricao(resultSet.getString("DESCRICAO"));
                 livro.setPreco(resultSet.getDouble("PRECO"));
                 livro.setEstoque(resultSet.getInt("ESTOQUE"));
+                livro.setCategoria(resultSet.getString("CATEGORIA"));
                 livros.add(livro);
 
             }
@@ -115,7 +117,7 @@ public class LivroDao {
 
     public void updateLivro(Livro livro) {
 
-        String SQL = "UPDATE LIVRO SET NAME = ?, AUTOR = ?, DESCRICAO = ?, PRECO = ?, ESTOQUE = ? WHERE ID = ?";
+        String SQL = "UPDATE LIVRO SET NAME = ?, AUTOR = ?, DESCRICAO = ?, PRECO = ?, ESTOQUE = ?, CATEGORIA = ? WHERE ID = ?";
 
         try {
 
@@ -130,7 +132,8 @@ public class LivroDao {
             preparedStatement.setString(3, livro.getDescricao());
             preparedStatement.setDouble(4, livro.getPreco());
             preparedStatement.setInt(5, livro.getEstoque());
-            preparedStatement.setString(6, livro.getId());
+            preparedStatement.setString(6, livro.getCategoria());
+            preparedStatement.setString(7, livro.getId());
             preparedStatement.execute();
 
             System.out.println("Sucesso ao atualizar o livro");
@@ -166,6 +169,7 @@ public class LivroDao {
                     livro.setDescricao(resultSet.getString("DESCRICAO"));
                     livro.setPreco(resultSet.getDouble("PRECO"));
                     livro.setEstoque(resultSet.getInt("ESTOQUE"));
+                    livro.setCategoria(resultSet.getString("CATEGORIA"));
 
                     return livro;
                 }

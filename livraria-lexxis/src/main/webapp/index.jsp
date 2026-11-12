@@ -10,6 +10,22 @@
     <title>${editando ? 'Editar Livro' : 'Adicionar Livro'} - Livraria Lexxis</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/admin.css">
+
+    <style>
+        .campo-form select {
+            width: 100%;
+            padding: 12px 14px;
+            background: #fff;
+            border: 1px solid #bdbdbd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .campo-form select:focus {
+            outline: 2px solid var(--marrom);
+        }
+    </style>
 </head>
 <body>
 
@@ -71,6 +87,16 @@
                     <input type="number" id="estoque" name="estoque" required min="0" step="1"
                            placeholder="Ex: 10"
                            value="<c:out value='${livro.estoque}'/>">
+                </div>
+
+                <div class="campo-form">
+                    <label for="categoria">Categoria <span class="obrig">*</span></label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="" disabled ${empty livro.categoria ? 'selected' : ''}>Selecione a categoria...</option>
+                        <c:forTokens items="Romance,Suspense,Ficção Científica,Comédia,Educação,Outros" delims="," var="cat">
+                            <option value="${cat}" ${livro.categoria == cat ? 'selected' : ''}>${cat}</option>
+                        </c:forTokens>
+                    </select>
                 </div>
 
                 <div class="coluna-img">

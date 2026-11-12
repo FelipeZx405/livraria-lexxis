@@ -24,12 +24,19 @@ public class CreateLivroServlet extends HttpServlet {
         String autor = request.getParameter("autor");
         String descricao = request.getParameter("descricao");
         String precoParam = request.getParameter("preco");
+        String categoria = request.getParameter("categoria");
 
 
         Livro livro = new Livro();
         livro.setNome(name);
         livro.setAutor(autor);
         livro.setDescricao(descricao);
+
+        if (categoria == null || categoria.trim().isEmpty()) {
+            livro.setCategoria("Outros");
+        } else {
+            livro.setCategoria(categoria.trim());
+        }
 
         if (precoParam != null && !precoParam.isEmpty()) {
             livro.setPreco(Double.parseDouble(precoParam));

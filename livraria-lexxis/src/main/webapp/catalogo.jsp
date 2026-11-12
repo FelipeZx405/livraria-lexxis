@@ -44,13 +44,12 @@
             color: inherit;
         }
 
-        /* ---------- Layout da pagina ---------- */
+        /* ---------- Layout da pagina (filtros colados na esquerda) ---------- */
         .pagina {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px 24px;
+            margin: 0;
+            padding: 0 24px 24px 16px;
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 250px 1fr;
             gap: 24px;
             align-items: start;
         }
@@ -121,6 +120,7 @@
             gap: 8px;
             font-size: 12px;
             margin-bottom: 8px;
+            cursor: pointer;
         }
 
         .opcao input {
@@ -130,6 +130,13 @@
 
         .opcao.desativada {
             color: #777;
+            cursor: default;
+        }
+
+        .qtd-cat {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--texto-suave);
         }
 
         .campo {
@@ -269,6 +276,19 @@
             padding: 0 12px 12px;
         }
 
+        .tag-cat {
+            align-self: flex-start;
+            margin-bottom: 4px;
+            padding: 2px 8px;
+            background: #cfcfcf;
+            border-radius: 10px;
+            color: #444;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+
         .nome {
             font-weight: bold;
             font-size: 14px;
@@ -366,13 +386,15 @@
         </div>
 
         <div class="grupo">
-            <h3>Categorias <span class="em-breve">em breve</span></h3>
-            <label class="opcao desativada"><input type="checkbox" disabled> Romance</label>
-            <label class="opcao desativada"><input type="checkbox" disabled> Suspense</label>
-            <label class="opcao desativada"><input type="checkbox" disabled> Ficção Científica</label>
-            <label class="opcao desativada"><input type="checkbox" disabled> Comédia</label>
-            <label class="opcao desativada"><input type="checkbox" disabled> Educação</label>
-            <label class="opcao desativada"><input type="checkbox" disabled> Outros</label>
+            <h3>Categorias</h3>
+
+            <c:forTokens items="Romance,Suspense,Ficção Científica,Comédia,Educação,Outros" delims="," var="cat">
+                <label class="opcao">
+                    <input type="checkbox" name="categoria" value="${cat}">
+                    ${cat}
+                    <span class="qtd-cat" data-cat="${cat}"></span>
+                </label>
+            </c:forTokens>
         </div>
 
         <div class="grupo">
@@ -425,9 +447,13 @@
         <div class="grade" id="grade">
 
             <c:forEach var="livro" items="${livros}">
+
+                <c:set var="categoriaLivro" value="${empty livro.categoria ? 'Outros' : livro.categoria}"/>
+
                 <article class="card-livro"
                          data-nome="<c:out value='${livro.nome}'/>"
                          data-autor="<c:out value='${livro.autor}'/>"
+                         data-categoria="<c:out value='${categoriaLivro}'/>"
                          data-preco="${livro.preco}"
                          data-estoque="${livro.estoque}">
 
@@ -445,6 +471,8 @@
                     </div>
 
                     <div class="info">
+                        <span class="tag-cat"><c:out value="${categoriaLivro}"/></span>
+
                         <p class="nome"><c:out value="${livro.nome}"/></p>
                         <p class="autor"><c:out value="${livro.autor}"/></p>
 
@@ -506,14 +534,25 @@
         var campoOrdem = document.getElementById('ordenar');
         var contador = document.getElementById('contador');
         var semResultados = document.getElementById('sem-resultados');
+        var checksCategoria = Array.prototype.slice.call(document.querySelectorAll('input[name="categoria"]'));
 
         // Prepara os dados de cada card uma unica vez
         cards.forEach(function (card, indice) {
             card._ordem = indice;
             card._nome = normalizar(card.getAttribute('data-nome'));
             card._autor = normalizar(card.getAttribute('data-autor'));
+            card._categoria = normalizar(card.getAttribute('data-categoria'));
             card._preco = parseFloat(card.getAttribute('data-preco')) || 0;
             card._estoque = parseInt(card.getAttribute('data-estoque'), 10) || 0;
+        });
+
+        // Mostra ao lado de cada categoria quantos livros existem nela
+        Array.prototype.slice.call(document.querySelectorAll('.qtd-cat')).forEach(function (span) {
+            var alvo = normalizar(span.getAttribute('data-cat'));
+            var total = cards.filter(function (card) {
+                return card._categoria === alvo;
+            }).length;
+            span.textContent = '(' + total + ')';
         });
 
         function ordenar() {
@@ -542,12 +581,18 @@
             var apenasEstoque = campoEstoque.checked;
             var visiveis = 0;
 
+            // categorias marcadas (se nenhuma estiver marcada, mostra todas)
+            var categoriasMarcadas = checksCategoria
+                .filter(function (check) { return check.checked; })
+                .map(function (check) { return normalizar(check.value); });
+
             cards.forEach(function (card) {
 
                 var ok = true;
 
                 if (busca && card._nome.indexOf(busca) === -1 && card._autor.indexOf(busca) === -1) { ok = false; }
                 if (autor && card._autor.indexOf(autor) === -1) { ok = false; }
+                if (categoriasMarcadas.length > 0 && categoriasMarcadas.indexOf(card._categoria) === -1) { ok = false; }
                 if (!isNaN(min) && card._preco < min) { ok = false; }
                 if (!isNaN(max) && card._preco > max) { ok = false; }
                 if (apenasEstoque && card._estoque <= 0) { ok = false; }
@@ -570,6 +615,7 @@
             campoMax.value = '';
             campoEstoque.checked = false;
             campoOrdem.value = 'padrao';
+            checksCategoria.forEach(function (check) { check.checked = false; });
             aplicar();
         }
 
@@ -579,6 +625,9 @@
         campoMax.addEventListener('input', aplicar);
         campoEstoque.addEventListener('change', aplicar);
         campoOrdem.addEventListener('change', aplicar);
+        checksCategoria.forEach(function (check) {
+            check.addEventListener('change', aplicar);
+        });
 
         document.getElementById('btn-aplicar').addEventListener('click', aplicar);
         document.getElementById('btn-limpar').addEventListener('click', limpar);
