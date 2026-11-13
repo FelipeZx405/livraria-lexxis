@@ -17,6 +17,21 @@ import java.io.IOException;
 @WebFilter("/*")
 public class AuthFilter implements Filter {
 
+    private static final Object[][] LIVROS_INICIAIS = {
+            {"Dom Casmurro", "Machado de Assis",
+                    "Clássico da literatura brasileira em que Bentinho relembra o amor por Capitu e as dúvidas que marcaram sua vida.",
+                    39.90, 15, "dom-casmurro.jpg"},
+            {"1984", "George Orwell",
+                    "Distopia sobre um regime totalitário que vigia e controla tudo, até o pensamento de seus cidadãos.",
+                    49.90, 20, "1984.jpg"},
+            {"O Pequeno Príncipe", "Antoine de Saint-Exupéry",
+                    "Fábula de um pequeno príncipe que viaja entre planetas e fala de amizade, amor e do que realmente importa.",
+                    29.90, 30, "pequeno-principe.jpg"},
+            {"Harry Potter e a Pedra Filosofal", "J.K. Rowling",
+                    "Aos onze anos, Harry descobre que é bruxo e começa sua jornada na Escola de Magia e Bruxaria de Hogwarts.",
+                    59.90, 12, "harry-potter.jpg"}
+    };
+
     // páginas que SÓ o administrador pode abrir
     private static final String[] ROTAS_ADMIN = {
             "/index.jsp",
