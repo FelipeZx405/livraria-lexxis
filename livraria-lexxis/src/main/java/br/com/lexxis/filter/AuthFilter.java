@@ -49,14 +49,15 @@ public class AuthFilter implements Filter {
         Usuario usuario = session == null ? null : (Usuario) session.getAttribute("usuarioLogado");
         boolean logado = usuario != null;
 
-        // quem abre o site (endereço "/") vai direto para o catálogo
+        // quem abre o site (endereço "/") vai direto para a Home
         if (path.isEmpty() || path.equals("/")) {
-            resp.sendRedirect(logado && usuario.isAdmin() ? "/find-all-livros" : "/catalogo");
+            resp.sendRedirect("/home");
             return;
         }
 
         boolean paginaPublica = path.equals("/login")
                 || path.equals("/registro")
+                || path.equals("/home")
                 || path.equals("/catalogo")
                 || path.startsWith("/css/")
                 || path.startsWith("/img/");

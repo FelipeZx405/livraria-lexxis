@@ -14,7 +14,7 @@
 
         <!-- LINKS -->
         <div class="nav-links">
-            <a href="/catalogo">INÍCIO</a>
+            <a href="/home">INICIO</a>
             <a href="/catalogo">LIVROS</a>
             <a href="#sobre">SOBRE</a>
             <a href="#contato">CONTATO</a>

@@ -632,6 +632,31 @@
         document.getElementById('btn-aplicar').addEventListener('click', aplicar);
         document.getElementById('btn-limpar').addEventListener('click', limpar);
 
+                // Filtros vindos da URL (ex.: /catalogo?categoria=Romance, vindos da Home)
+                var parametros = new URLSearchParams(window.location.search);
+
+                parametros.getAll('categoria').forEach(function (valor) {
+                    checksCategoria.forEach(function (check) {
+                        if (normalizar(check.value) === normalizar(valor)) {
+                            check.checked = true;
+                        }
+                    });
+                });
+
+                var termo = parametros.get('q') || parametros.get('busca');
+                if (termo) {
+                    campoBusca.value = termo;
+                }
+
+                if (parametros.get('estoque') === '1') {
+                    campoEstoque.checked = true;
+                }
+
+                var ordemUrl = parametros.get('ordem');
+                if (ordemUrl === 'nome' || ordemUrl === 'menor' || ordemUrl === 'maior') {
+                    campoOrdem.value = ordemUrl;
+                }
+
         aplicar();
 
     })();
