@@ -9,6 +9,8 @@ public class Livro {
     private double preco;
     private int estoque;
     private String categoria;
+    private boolean temCapa;
+    private long capaVersao;
 
     public String getNome() {
         return nome;
@@ -64,5 +66,23 @@ public class Livro {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    // true se o livro tem imagem de capa (a imagem em si fica no banco e é entregue por /capa)
+    public boolean isTemCapa() {
+        return temCapa;
+    }
+
+    public void setTemCapa(boolean temCapa) {
+        this.temCapa = temCapa;
+    }
+
+    // muda a cada nova capa; vai na URL da imagem para o navegador não mostrar uma versão antiga
+    public long getCapaVersao() {
+        return capaVersao;
+    }
+
+    public void setCapaVersao(long capaVersao) {
+        this.capaVersao = capaVersao;
     }
 }

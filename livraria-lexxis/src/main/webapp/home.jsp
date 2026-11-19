@@ -549,6 +549,25 @@
             letter-spacing: .5px;
             text-transform: uppercase;
         }
+                /* capa de verdade (imagem enviada pelo painel) */
+                .home-capa-livro.com-imagem {
+                    padding: 0;
+                    background: #fff;
+                }
+
+                .home-capa-livro.com-imagem::before,
+                .home-capa-livro.com-imagem::after {
+                    display: none;
+                }
+
+                .home-capa-livro.com-imagem img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
 
         .home-livro-info {
             display: flex;
@@ -896,13 +915,29 @@
                         <article class="home-livro">
 
                             <a class="home-livro-link" href="/catalogo" data-nome="<c:out value='${livro.nome}'/>">
-                                <div class="home-capa-livro">
-                                    <c:if test="${st.first}">
-                                        <span class="home-novo">Novo</span>
-                                    </c:if>
-                                    <span class="home-capa-titulo"><c:out value="${livro.nome}"/></span>
-                                    <span class="home-capa-autor"><c:out value="${livro.autor}"/></span>
-                                </div>
+                                                              <c:choose>
+
+                                                                  <c:when test="${livro.temCapa}">
+                                                                      <div class="home-capa-livro com-imagem">
+                                                                          <c:if test="${st.first}">
+                                                                              <span class="home-novo">Novo</span>
+                                                                          </c:if>
+                                                                          <img src="/capa?id=${livro.id}&amp;v=${livro.capaVersao}"
+                                                                               alt="Capa de <c:out value='${livro.nome}'/>" loading="lazy">
+                                                                      </div>
+                                                                  </c:when>
+
+                                                                  <c:otherwise>
+                                                                      <div class="home-capa-livro">
+                                                                          <c:if test="${st.first}">
+                                                                              <span class="home-novo">Novo</span>
+                                                                          </c:if>
+                                                                          <span class="home-capa-titulo"><c:out value="${livro.nome}"/></span>
+                                                                          <span class="home-capa-autor"><c:out value="${livro.autor}"/></span>
+                                                                      </div>
+                                                                  </c:otherwise>
+
+                                                              </c:choose>
                             </a>
 
                             <div class="home-livro-info">

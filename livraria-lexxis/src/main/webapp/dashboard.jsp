@@ -45,6 +45,11 @@
             </div>
         </div>
 
+        <%-- NOVO: aviso quando a imagem enviada passou de 2 MB --%>
+        <c:if test="${param.erro == 'capa'}">
+            <p class="aviso-erro">A imagem enviada é maior que 2 MB. O livro não foi salvo; tente de novo com uma imagem menor.</p>
+        </c:if>
+
         <div class="tabela-wrap">
             <table class="tabela" id="tabela-livros">
                 <thead>
@@ -65,9 +70,18 @@
                         data-autor="<c:out value='${livro.autor}'/>"
                         data-preco="${livro.preco}">
 
+                        <%-- NOVO: mostra a capa do livro; sem capa, continua o ícone cinza --%>
                         <td class="col-capa">
                             <div class="capa-mini">
-                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                <c:choose>
+                                    <c:when test="${livro.temCapa}">
+                                        <img src="/capa?id=${livro.id}&amp;v=${livro.capaVersao}"
+                                             alt="Capa de <c:out value='${livro.nome}'/>" loading="lazy">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </td>
 

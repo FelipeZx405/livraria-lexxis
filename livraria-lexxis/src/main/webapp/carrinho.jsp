@@ -126,6 +126,13 @@
             height: 44px;
             fill: #6f6f6f;
         }
+        .foto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+        }
 
         .nome {
             font-weight: bold;
@@ -447,9 +454,17 @@
                     <c:forEach var="item" items="${carrinho.itens}">
                         <article class="item">
 
-                            <div class="foto">
-                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                            </div>
+                                                       <div class="foto">
+                                                           <c:choose>
+                                                               <c:when test="${item.livro.temCapa}">
+                                                                   <img src="/capa?id=${item.livro.id}&amp;v=${item.livro.capaVersao}"
+                                                                        alt="Capa de <c:out value='${item.livro.nome}'/>">
+                                                               </c:when>
+                                                               <c:otherwise>
+                                                                   <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                                               </c:otherwise>
+                                                           </c:choose>
+                                                       </div>
 
                             <div class="info">
                                 <p class="nome"><c:out value="${item.livro.nome}"/></p>

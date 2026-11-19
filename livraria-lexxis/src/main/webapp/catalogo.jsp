@@ -249,6 +249,15 @@
             fill: #c4c4c4;
         }
 
+        /* NOVO: imagem de capa enviada pelo painel */
+        .capa img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+        }
+
         .selo {
             position: absolute;
             top: 8px;
@@ -458,7 +467,17 @@
                          data-estoque="${livro.estoque}">
 
                     <div class="capa">
-                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+
+                        <%-- NOVO: mostra a capa enviada; sem capa, continua o ícone cinza --%>
+                        <c:choose>
+                            <c:when test="${livro.temCapa}">
+                                <img src="/capa?id=${livro.id}&amp;v=${livro.capaVersao}"
+                                     alt="Capa de <c:out value='${livro.nome}'/>" loading="lazy">
+                            </c:when>
+                            <c:otherwise>
+                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                            </c:otherwise>
+                        </c:choose>
 
                         <c:choose>
                             <c:when test="${livro.estoque <= 0}">

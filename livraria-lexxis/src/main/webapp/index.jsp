@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="editando" value="${not empty livro}"/>
+<c:set var="capaAtual" value="${editando and livro.temCapa}"/>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -48,7 +49,8 @@
             ${editando ? 'Altere as informações abaixo e salve o livro.' : 'Preencha as informações abaixo para adicionar um novo livro à loja.'}
         </p>
 
-        <form action="/create-livro" method="post">
+        <%-- enctype="multipart/form-data" é obrigatório para enviar arquivo --%>
+        <form action="/create-livro" method="post" enctype="multipart/form-data">
 
             <%-- id vazio = livro novo; id preenchido = edição --%>
             <input type="hidden" name="id" value="<c:out value='${livro.id}'/>">
@@ -102,12 +104,34 @@
                 <div class="coluna-img">
 
                     <div class="campo-form">
-                        <label>Imagem da Capa <span class="em-breve">em breve</span></label>
-                        <div class="dropzone" aria-disabled="true">
-                            <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
-                            <p class="dz-titulo">Clique para adicionar uma imagem</p>
-                            <p class="dz-sub">ou arraste e solte aqui</p>
-                        </div>
+                        <label for="capa">Imagem da Capa <span class="dica">(JPG, PNG, WEBP ou GIF, até 2 MB)</span></label>
+
+                        <%-- clicar aqui abre o seletor de arquivo; também dá para arrastar a imagem --%>
+                        <label class="dropzone" id="dropzone" for="capa">
+
+                            <span class="dz-texto" id="dz-texto" ${capaAtual ? 'hidden' : ''}>
+                                <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+                                <span class="dz-titulo">Clique para adicionar uma imagem</span>
+                                <span class="dz-sub">ou arraste e solte aqui</span>
+                            </span>
+
+                            <span class="dz-previa" id="dz-previa" ${capaAtual ? '' : 'hidden'}>
+                                <span id="dz-img-box"><c:if test="${capaAtual}"><img src="/capa?id=${livro.id}&amp;v=${livro.capaVersao}" alt="Capa atual"></c:if></span>
+                                <span class="dz-sub">Clique ou arraste outra imagem para trocar</span>
+                            </span>
+
+                        </label>
+
+                        <input type="file" id="capa" name="capa" class="arquivo-oculto"
+                               accept="image/jpeg,image/png,image/webp,image/gif">
+
+                        <p class="aviso-capa" id="aviso-capa"></p>
+
+                        <c:if test="${capaAtual}">
+                            <label class="remover-capa">
+                                <input type="checkbox" name="removerCapa" value="1"> Remover a capa atual
+                            </label>
+                        </c:if>
                     </div>
 
                     <div class="form-acoes">
@@ -125,6 +149,83 @@
 </div>
 
 <%@ include file="/WEB-INF/rodape.jspf" %>
+
+<script>
+    (function () {
+
+        var LIMITE = 2 * 1024 * 1024;
+        var TIPOS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
+        var entrada = document.getElementById('capa');
+        var zona = document.getElementById('dropzone');
+        var texto = document.getElementById('dz-texto');
+        var previa = document.getElementById('dz-previa');
+        var caixa = document.getElementById('dz-img-box');
+        var aviso = document.getElementById('aviso-capa');
+
+        function limpar() {
+            entrada.value = '';
+            caixa.innerHTML = '';
+            previa.hidden = true;
+            texto.hidden = false;
+        }
+
+        function mostrar(arquivo) {
+
+            aviso.textContent = '';
+
+            if (!arquivo) { return; }
+
+            if (TIPOS.indexOf(arquivo.type) === -1) {
+                limpar();
+                aviso.textContent = 'Use uma imagem JPG, PNG, WEBP ou GIF.';
+                return;
+            }
+
+            if (arquivo.size > LIMITE) {
+                limpar();
+                aviso.textContent = 'A imagem tem mais de 2 MB. Escolha uma menor.';
+                return;
+            }
+
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(arquivo);
+            img.alt = 'Prévia da capa';
+
+            caixa.innerHTML = '';
+            caixa.appendChild(img);
+
+            previa.hidden = false;
+            texto.hidden = true;
+        }
+
+        entrada.addEventListener('change', function () {
+            mostrar(entrada.files[0]);
+        });
+
+        ['dragenter', 'dragover'].forEach(function (nome) {
+            zona.addEventListener(nome, function (evento) {
+                evento.preventDefault();
+                zona.classList.add('arrastando');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(function (nome) {
+            zona.addEventListener(nome, function (evento) {
+                evento.preventDefault();
+                zona.classList.remove('arrastando');
+            });
+        });
+
+        zona.addEventListener('drop', function (evento) {
+            if (evento.dataTransfer && evento.dataTransfer.files.length > 0) {
+                entrada.files = evento.dataTransfer.files;
+                mostrar(entrada.files[0]);
+            }
+        });
+
+    })();
+</script>
 
 </body>
 </html>
