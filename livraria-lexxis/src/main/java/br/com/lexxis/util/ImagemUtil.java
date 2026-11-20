@@ -1,14 +1,21 @@
 package br.com.lexxis.util;
 
+import javax.servlet.ServletContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 public class ImagemUtil {
 
     public static final int LIMITE_BYTES = 2 * 1024 * 1024; // 2 MB
 
-    private static final String[] EXTENSOES = {".jpg", ".jpeg", ".png", ".webp", ".gif"};
+    // pasta (dentro de webapp) onde ficam as capas dos livros iniciais
+    private static final String PASTA_CAPAS = "/img/capa/";
+
+    private static final List<String> EXTENSOES = Arrays.asList(".jpg", ".jpeg", ".png", ".webp", ".gif");
 
     // lê o arquivo inteiro; devolve null se passar do limite de tamanho
     public static byte[] lerBytes(InputStream entrada, int limite) throws IOException {
@@ -64,31 +71,63 @@ public class ImagemUtil {
         return null;
     }
 
-    // procura uma capa dos livros iniciais dentro do projeto: src/main/resources/capas-iniciais/<nomeBase>.jpg (ou .png etc.)
-    public static byte[] carregarCapaInicial(String nomeBase) {
+    // procura uma capa dos livros iniciais dentro de webapp/img/capa (ex.: "Dom Casmurro" acha "Dom Casmurro.png").
+    // A comparação ignora maiúsculas, espaços e traços. Devolve null se não achar o arquivo.
+    public static byte[] carregarCapaInicial(ServletContext contexto, String nomeBase) {
 
-        for (String extensao : EXTENSOES) {
+        Set<String> arquivos = contexto.getResourcePaths(PASTA_CAPAS);
 
-            try (InputStream entrada = ImagemUtil.class.getResourceAsStream("/capas-iniciais/" + nomeBase + extensao)) {
+        if (arquivos == null) {
+            System.out.println("Pasta das capas iniciais não encontrada: " + PASTA_CAPAS);
+            return null;
+        }
 
-                if (entrada != null) {
+        String procurado = simplificar(nomeBase);
 
-                    byte[] bytes = lerBytes(entrada, LIMITE_BYTES);
+        for (String caminho : arquivos) {
 
-                    if (bytes == null) {
-                        System.out.println("Capa inicial ignorada (maior que 2 MB): " + nomeBase + extensao);
-                    }
+            String arquivo = caminho.substring(caminho.lastIndexOf('/') + 1);
+            int ponto = arquivo.lastIndexOf('.');
 
-                    return bytes;
+            if (ponto < 0) {
+                continue;
+            }
+
+            String base = arquivo.substring(0, ponto);
+            String extensao = arquivo.substring(ponto).toLowerCase();
+
+            if (!EXTENSOES.contains(extensao) || !simplificar(base).equals(procurado)) {
+                continue;
+            }
+
+            try (InputStream entrada = contexto.getResourceAsStream(caminho)) {
+
+                if (entrada == null) {
+                    continue;
                 }
+
+                byte[] bytes = lerBytes(entrada, LIMITE_BYTES);
+
+                if (bytes == null) {
+                    System.out.println("Capa inicial ignorada (maior que 2 MB): " + arquivo);
+                }
+
+                return bytes;
 
             } catch (IOException e) {
 
-                System.out.println("Erro ao ler a capa inicial " + nomeBase + extensao + ": " + e.getMessage());
+                System.out.println("Erro ao ler a capa inicial " + arquivo + ": " + e.getMessage());
 
             }
         }
 
+        System.out.println("Capa inicial não encontrada em " + PASTA_CAPAS + ": " + nomeBase);
+
         return null;
+    }
+
+    // deixa só letras e números em minúsculo: "Harry Potter " e "harry-potter" viram "harrypotter"
+    private static String simplificar(String texto) {
+        return texto.toLowerCase().replaceAll("[^a-z0-9]", "");
     }
 }

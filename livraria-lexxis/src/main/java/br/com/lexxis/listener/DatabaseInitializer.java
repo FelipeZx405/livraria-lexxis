@@ -3,6 +3,7 @@ package br.com.lexxis.listener;
 import br.com.lexxis.util.ImagemUtil;
 import br.com.lexxis.util.SenhaUtil;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -15,22 +16,34 @@ import java.sql.Statement;
 @WebListener
 public class DatabaseInitializer implements ServletContextListener {
 
-    // Livros iniciais da loja, na ordem: nome, autor, descrição, preço, estoque, categoria e nome-base da capa.
-    // A capa fica em src/main/resources/capas-iniciais/<nome-base>.jpg (ou .png, .webp, .gif).
+    // Livros iniciais da loja, na ordem: nome, autor, descrição, preço, estoque, categoria e nome do arquivo da capa.
+    // A capa fica em src/main/webapp/img/capa/<nome do arquivo>.png (ou .jpg, .webp, .gif); escreva o nome sem a extensão.
     // Se o arquivo não existir, o livro fica sem capa. Para ter mais um livro fixo, acrescente uma linha.
     private static final Object[][] LIVROS_INICIAIS = {
             {"Dom Casmurro", "Machado de Assis",
-                    "Clássico da literatura brasileira em que Bentinho relembra o amor por Capitu e as dúvidas que marcaram sua vida.",
-                    39.90, 15, "Romance", "dom-casmurro"},
+                    "Classico da literatura brasileira em que Bentinho relembra o amor por Capitu e as duvidas que marcaram sua vida.",
+                    39.90, 15, "Romance", "Dom Casmurro"},
             {"1984", "George Orwell",
-                    "Distopia sobre um regime totalitário que vigia e controla tudo, até o pensamento de seus cidadãos.",
+                    "Distopia sobre um regime totalitario que vigia e controla tudo, até o pensamento de seus cidadaos.",
                     49.90, 20, "Ficção Científica", "1984"},
-            {"O Pequeno Príncipe", "Antoine de Saint-Exupéry",
-                    "Fábula de um pequeno príncipe que viaja entre planetas e fala de amizade, amor e do que realmente importa.",
-                    29.90, 30, "Outros", "pequeno-principe"},
+            {"O Pequeno Principe", "Antoine de Saint-Exupery",
+                    "Fabula de um pequeno principe que viaja entre planetas e fala de amizade, amor e do que realmente importa.",
+                    29.90, 30, "Outros", "O pequeno principe"},
             {"Harry Potter e a Pedra Filosofal", "J.K. Rowling",
                     "Aos onze anos, Harry descobre que é bruxo e começa sua jornada na Escola de Magia e Bruxaria de Hogwarts.",
-                    59.90, 12, "Outros", "harry-potter"}
+                    59.90, 12, "Outros", "Harry Potter"},
+            {"Biblia Sagrada", "Vários autores",
+                    "Conjunto de livros sagrados do cristianismo, reunindo o Antigo e o Novo Testamento.",
+                    79.90, 25, "Outros", "Biblia"},
+            {"Cartas de um Diabo a seu Aprendiz", "C.S. Lewis",
+                    "Um demonio veterano escreve cartas ao sobrinho aprendiz, ensinando como afastar uma pessoa da fe, em uma satira sobre a natureza humana.",
+                    44.90, 10, "Outros", "CartadoDiabo"},
+            {"O Segredo da Mente Milionária", "T. Harv Eker",
+                    "Mostra como as crencas e os habitos em relacao ao dinheiro influenciam a vida financeira e como muda-los para prosperar.",
+                    42.90, 18, "Educação", "OsegredoDaMenteMilionaria"},
+            {"Pai Rico, Pai Pobre", "Robert T. Kiyosaki",
+                    "Compara as licoes de dinheiro de dois pais e ensina conceitos de educacao financeira, investimentos e independencia.",
+                    49.90, 22, "Educacao", "PaiRicoPaiPobre"}
     };
 
     @Override
@@ -67,8 +80,8 @@ public class DatabaseInitializer implements ServletContextListener {
             System.out.println("Banco de dados pronto: tabelas verificadas");
 
             criarAdminSeNecessario(connection, statement);
-            criarLivrosIniciaisSeNecessario(connection, statement);
-            aplicarCapasIniciais(connection);
+            criarLivrosIniciaisSeNecessario(connection);
+            aplicarCapasIniciais(connection, sce.getServletContext());
 
         } catch (Exception e) {
 
@@ -103,40 +116,51 @@ public class DatabaseInitializer implements ServletContextListener {
         System.out.println("Conta do ADM criada: admin@lexxis.com / admin123 (troque a senha em Minha conta)");
     }
 
-    // cadastra os livros iniciais, mas só se a tabela LIVRO estiver vazia
-    private void criarLivrosIniciaisSeNecessario(Connection connection, Statement statement) throws Exception {
+    // cadastra cada livro inicial que ainda não existe (a conferência é pelo nome do livro)
+    private void criarLivrosIniciaisSeNecessario(Connection connection) throws Exception {
 
-        int livros = 0;
+        String SQL_EXISTE = "SELECT COUNT(*) FROM LIVRO WHERE NAME = ?";
+        String SQL_INSERIR = "INSERT INTO LIVRO (NAME, AUTOR, DESCRICAO, PRECO, ESTOQUE, CATEGORIA) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM LIVRO")) {
-            resultSet.next();
-            livros = resultSet.getInt(1);
-        }
+        int cadastrados = 0;
 
-        if (livros > 0) {
-            return;
-        }
-
-        String SQL = "INSERT INTO LIVRO (NAME, AUTOR, DESCRICAO, PRECO, ESTOQUE, CATEGORIA) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+        try (PreparedStatement existe = connection.prepareStatement(SQL_EXISTE);
+             PreparedStatement inserir = connection.prepareStatement(SQL_INSERIR)) {
 
             for (Object[] livro : LIVROS_INICIAIS) {
-                preparedStatement.setString(1, (String) livro[0]);
-                preparedStatement.setString(2, (String) livro[1]);
-                preparedStatement.setString(3, (String) livro[2]);
-                preparedStatement.setDouble(4, (Double) livro[3]);
-                preparedStatement.setInt(5, (Integer) livro[4]);
-                preparedStatement.setString(6, (String) livro[5]);
-                preparedStatement.execute();
+
+                existe.setString(1, (String) livro[0]);
+
+                int quantidade = 0;
+
+                try (ResultSet resultSet = existe.executeQuery()) {
+                    resultSet.next();
+                    quantidade = resultSet.getInt(1);
+                }
+
+                if (quantidade > 0) {
+                    continue;
+                }
+
+                inserir.setString(1, (String) livro[0]);
+                inserir.setString(2, (String) livro[1]);
+                inserir.setString(3, (String) livro[2]);
+                inserir.setDouble(4, (Double) livro[3]);
+                inserir.setInt(5, (Integer) livro[4]);
+                inserir.setString(6, (String) livro[5]);
+                inserir.execute();
+
+                cadastrados++;
             }
         }
 
-        System.out.println("Livros iniciais cadastrados: " + LIVROS_INICIAIS.length);
+        if (cadastrados > 0) {
+            System.out.println("Livros iniciais cadastrados: " + cadastrados);
+        }
     }
 
     // coloca a capa nos livros iniciais que ainda não têm (não mexe em capas enviadas pelo painel)
-    private void aplicarCapasIniciais(Connection connection) throws Exception {
+    private void aplicarCapasIniciais(Connection connection, ServletContext contexto) throws Exception {
 
         String SQL = "UPDATE LIVRO SET CAPA = ?, CAPA_TIPO = ?, CAPA_VERSAO = ? WHERE NAME = ? AND CAPA_TIPO IS NULL";
 
@@ -144,7 +168,7 @@ public class DatabaseInitializer implements ServletContextListener {
 
             for (Object[] livro : LIVROS_INICIAIS) {
 
-                byte[] bytes = ImagemUtil.carregarCapaInicial((String) livro[6]);
+                byte[] bytes = ImagemUtil.carregarCapaInicial(contexto, (String) livro[6]);
                 String tipo = ImagemUtil.detectarTipo(bytes);
 
                 if (tipo == null) {
