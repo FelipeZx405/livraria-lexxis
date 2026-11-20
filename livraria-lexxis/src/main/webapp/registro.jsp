@@ -1,37 +1,83 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Criar conta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Criar conta - Lexxis Livraria</title>
+    <link rel="stylesheet" href="/css/registro.css">
 </head>
 <body>
-<h2>Livraria Lexxis - Criar conta</h2>
 
-<c:if test="${not empty erro}">
-    <p><b>${erro}</b></p>
-</c:if>
+<main class="registro-card">
 
-<form action="/registro" method="post">
+    <!-- ===== Lado esquerdo: marca ===== -->
+    <section class="lado-marca">
+        <img class="logo" src="/img/logo.png" alt="Lexxis Livraria" height="70">
+        <img class="livros" src="/img/livros-login.png" alt="Pilha de livros Lexxis">
+        <h2>Bem vindos à Lexxis</h2>
+        <p>Descubra novos Mundos através da leitura</p>
+    </section>
 
-    <label>Nome:</label>
-    <input type="text" name="nome" required value="<c:out value="${param.nome}"/>">
+    <!-- ===== Lado direito: formulário ===== -->
+    <section class="lado-form">
 
-    <br><label>Email:</label>
-    <input type="email" name="email" required value="<c:out value="${param.email}"/>">
+        <h1>Criar conta na Lexxis</h1>
 
-    <br><label>Senha (mínimo 6 caracteres):</label>
-    <input type="password" name="senha" required>
+        <c:if test="${not empty erro}">
+            <div class="msg erro"><c:out value="${erro}"/></div>
+        </c:if>
 
-    <br><label>Confirmar senha:</label>
-    <input type="password" name="confirmacao" required>
+        <form action="/registro" method="post">
 
-    <br>
-    <button type="submit">Criar conta</button>
+            <label class="campo">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/>
+                </svg>
+                <input type="text" name="nome" placeholder="Digite seu nome" required
+                       autocomplete="name"
+                       value="<c:out value="${param.nome}"/>">
+            </label>
 
-</form>
+            <label class="campo">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <polyline points="3 7 12 13 21 7"/>
+                </svg>
+                <input type="email" name="email" placeholder="Digite seu e-mail" required
+                       autocomplete="email"
+                       value="<c:out value="${param.email}"/>">
+            </label>
 
-<p>Já tem conta? <a href="/login">Entrar</a></p>
+            <label class="campo">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="4" y="11" width="16" height="10" rx="2" fill="currentColor"/>
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                </svg>
+                <input type="password" name="senha" placeholder="Senha (mínimo 6 caracteres)" required
+                       minlength="6" autocomplete="new-password">
+            </label>
+
+            <label class="campo">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="4" y="11" width="16" height="10" rx="2" fill="currentColor"/>
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                </svg>
+                <input type="password" name="confirmacao" placeholder="Confirmar senha" required
+                       minlength="6" autocomplete="new-password">
+            </label>
+
+            <button type="submit" class="botao-criar">CRIAR CONTA</button>
+
+        </form>
+
+        <p class="ja-tem-conta">Já tem conta? <a href="/login">Entrar</a></p>
+
+    </section>
+
+</main>
 
 </body>
 </html>
