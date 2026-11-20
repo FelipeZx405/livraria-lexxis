@@ -18,13 +18,16 @@
             <a href="/catalogo">LIVROS</a>
             <a href="#sobre">SOBRE</a>
             <a href="#contato">CONTATO</a>
+            <c:if test="${logado}">
+                <a href="/pedidos">PEDIDOS</a>
+            </c:if>
         </div>
 
         <!-- ÍCONES -->
         <div class="nav-icons">
 
             <a href="#busca" title="Pesquisar" class="icone"
-               onclick="document.getElementById('busca').focus(); return false;">
+               onclick="var b = document.getElementById('busca'); if (b) { b.focus(); } return false;">
                 <svg viewBox="0 0 24 24">
                     <circle cx="10.5" cy="10.5" r="6.5"/>
                     <path d="m16 16 5 5"/>

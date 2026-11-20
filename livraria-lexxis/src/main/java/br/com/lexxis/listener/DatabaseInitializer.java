@@ -45,7 +45,7 @@ public class DatabaseInitializer implements ServletContextListener {
                 "ALTER TABLE LIVRO ADD COLUMN IF NOT EXISTS ESTOQUE INT DEFAULT 0",
                 "ALTER TABLE LIVRO ADD COLUMN IF NOT EXISTS CATEGORIA VARCHAR(50) DEFAULT 'Outros'",
 
-                // NOVO: a capa do livro (a imagem fica guardada no próprio banco)
+                // a capa do livro (a imagem fica guardada no próprio banco)
                 "ALTER TABLE LIVRO ADD COLUMN IF NOT EXISTS CAPA BLOB",
                 "ALTER TABLE LIVRO ADD COLUMN IF NOT EXISTS CAPA_TIPO VARCHAR(30)",
                 "ALTER TABLE LIVRO ADD COLUMN IF NOT EXISTS CAPA_VERSAO BIGINT DEFAULT 0",
@@ -53,7 +53,19 @@ public class DatabaseInitializer implements ServletContextListener {
                 "CREATE TABLE IF NOT EXISTS USUARIO (ID INT PRIMARY KEY AUTO_INCREMENT, NAME VARCHAR(255), EMAIL VARCHAR(255) UNIQUE, SENHA VARCHAR(255))",
 
                 // perfil do usuário. Quem se cadastra no site sempre fica como CLIENTE
-                "ALTER TABLE USUARIO ADD COLUMN IF NOT EXISTS PERFIL VARCHAR(10) DEFAULT 'CLIENTE'"
+                "ALTER TABLE USUARIO ADD COLUMN IF NOT EXISTS PERFIL VARCHAR(10) DEFAULT 'CLIENTE'",
+
+                // NOVO: pedidos (sem chave estrangeira para LIVRO de propósito: o histórico não quebra se o livro for excluído)
+                "CREATE TABLE IF NOT EXISTS PEDIDO (ID INT PRIMARY KEY AUTO_INCREMENT, USUARIO_ID INT NOT NULL, "
+                        + "DATA_PEDIDO TIMESTAMP DEFAULT CURRENT_TIMESTAMP, VALOR_SUBTOTAL DOUBLE DEFAULT 0, "
+                        + "VALOR_FRETE DOUBLE DEFAULT 0, VALOR_DESCONTO DOUBLE DEFAULT 0, VALOR_TOTAL DOUBLE DEFAULT 0, "
+                        + "FORMA_PAGAMENTO VARCHAR(20), PARCELAS INT DEFAULT 1, CARTAO_FINAL VARCHAR(4), "
+                        + "SITUACAO VARCHAR(30), DEST_NOME VARCHAR(255), CEP VARCHAR(8), ENDERECO VARCHAR(255), "
+                        + "NUMERO VARCHAR(20), COMPLEMENTO VARCHAR(100), BAIRRO VARCHAR(100), CIDADE VARCHAR(100), "
+                        + "UF VARCHAR(2))",
+
+                "CREATE TABLE IF NOT EXISTS ITEM_PEDIDO (ID INT PRIMARY KEY AUTO_INCREMENT, PEDIDO_ID INT NOT NULL, "
+                        + "LIVRO_ID INT, NOME VARCHAR(255), AUTOR VARCHAR(255), PRECO DOUBLE, QUANTIDADE INT)"
 
         };
 

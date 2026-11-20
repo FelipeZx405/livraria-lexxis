@@ -126,6 +126,7 @@
             height: 44px;
             fill: #6f6f6f;
         }
+
         .foto img {
             width: 100%;
             height: 100%;
@@ -454,17 +455,17 @@
                     <c:forEach var="item" items="${carrinho.itens}">
                         <article class="item">
 
-                                                       <div class="foto">
-                                                           <c:choose>
-                                                               <c:when test="${item.livro.temCapa}">
-                                                                   <img src="/capa?id=${item.livro.id}&amp;v=${item.livro.capaVersao}"
-                                                                        alt="Capa de <c:out value='${item.livro.nome}'/>">
-                                                               </c:when>
-                                                               <c:otherwise>
-                                                                   <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                                                               </c:otherwise>
-                                                           </c:choose>
-                                                       </div>
+                            <div class="foto">
+                                <c:choose>
+                                    <c:when test="${item.livro.temCapa}">
+                                        <img src="/capa?id=${item.livro.id}&amp;v=${item.livro.capaVersao}"
+                                             alt="Capa de <c:out value='${item.livro.nome}'/>">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
 
                             <div class="info">
                                 <p class="nome"><c:out value="${item.livro.nome}"/></p>
@@ -546,24 +547,16 @@
                         <span><fmt:formatNumber value="${carrinho.total}" type="currency"/></span>
                     </div>
 
-                    <!--
-                        A finalizacao da compra ainda nao existe.
-                        Quando existir, troque este <button> por:
-                        <a class="btn btn-marrom" href="/finalizar-compra">Finalizar Compra</a>
-                    -->
-                    <button type="button" class="btn btn-marrom" disabled>
+                    <p class="nota" style="margin: -8px 0 12px;">Frete e descontos são calculados na próxima etapa.</p>
+
+                    <a class="btn btn-marrom" href="/checkout">
                         <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                         Finalizar Compra
-                    </button>
+                    </a>
 
-                    <c:choose>
-                        <c:when test="${logado}">
-                            <p class="nota">A finalização da compra será liberada em breve.</p>
-                        </c:when>
-                        <c:otherwise>
-                            <p class="nota"><a href="/login">Entre na sua conta</a> para finalizar a compra.</p>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:if test="${not logado}">
+                        <p class="nota"><a href="/login">Entre na sua conta</a> para finalizar a compra.</p>
+                    </c:if>
 
                     <a class="btn btn-contorno" href="/catalogo">
                         <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>

@@ -20,4 +20,33 @@
     <servlet-name>H2Console</servlet-name>
     <url-pattern>/console/*</url-pattern>
   </servlet-mapping>
+
+  <!-- ===== Finalizar compra e pedidos ===== -->
+  <servlet>
+    <servlet-name>br.com.lexxis.servlet.CheckoutServlet</servlet-name>
+    <servlet-class>br.com.lexxis.servlet.CheckoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>br.com.lexxis.servlet.CheckoutServlet</servlet-name>
+    <url-pattern>/checkout</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>br.com.lexxis.servlet.PedidoServlet</servlet-name>
+    <servlet-class>br.com.lexxis.servlet.PedidoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>br.com.lexxis.servlet.PedidoServlet</servlet-name>
+    <url-pattern>/pedido</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>br.com.lexxis.servlet.PedidosServlet</servlet-name>
+    <servlet-class>br.com.lexxis.servlet.PedidosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>br.com.lexxis.servlet.PedidosServlet</servlet-name>
+    <url-pattern>/pedidos</url-pattern>
+  </servlet-mapping>
+
 </web-app>

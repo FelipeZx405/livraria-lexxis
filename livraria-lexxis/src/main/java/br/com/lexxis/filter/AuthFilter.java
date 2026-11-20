@@ -69,8 +69,9 @@ public class AuthFilter implements Filter {
         }
 
         // daqui para baixo, só quem está logado
+        // (inclui /checkout, /pedido e /pedidos)
         if (!logado) {
-            if (path.equals("/carrinho")) {
+            if (path.equals("/carrinho") || path.equals("/checkout")) {
                 resp.sendRedirect("/login?aviso=carrinho");
             } else {
                 resp.sendRedirect("/login");
